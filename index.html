@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-<title>Khodi - Cek Khodam & Kuis Harian</title>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<!-- saved from url=(0037)https://litter.catbox.moe/jd6vfe.html -->
+<html lang="id" style="--tg-viewport-height: 100vh; --tg-viewport-stable-height: 100vh;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Khodi - Cek Khodam &amp; Kuis Harian</title>
+<script src="./index_files/telegram-web-app.js.download"></script>
 <!-- ====== KONFIGURASI: ganti 2 nilai ini ====== -->
 <script>
   window.KHODI_CONFIG = {
@@ -181,22 +181,44 @@
   .ref-stat{display:inline-block;min-width:150px;margin:0 auto 6px;padding:10px 18px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid var(--stroke)}
   .ref-stat b{display:block;font-size:22px}
   .ref-stat span{font-size:11px;color:var(--muted)}
+  /* Dompet */
+  .wallet-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .wallet-bal{font-size:26px;font-weight:900;background:linear-gradient(90deg,#ffe27a,var(--gold),#ff9d3b);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .wallet-tag{font-size:11px;color:#06102a;background:linear-gradient(135deg,#3ef0a1,#4fe3ff);padding:4px 10px;border-radius:20px;font-weight:800}
+  .prog{height:10px;border-radius:6px;background:rgba(255,255,255,.1);overflow:hidden;margin:10px 0 6px}
+  .prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ffe27a,#ff9d3b);transition:width .8s ease}
+  .reqs{list-style:none;padding:0;margin:10px 0 12px;font-size:12.5px;color:var(--muted)}
+  .reqs li{display:flex;align-items:center;gap:8px;padding:3px 0}
+  .reqs li::before{content:'';width:14px;height:14px;border-radius:50%;border:1.5px solid var(--muted);flex:none}
+  .reqs li.ok{color:var(--text)}
+  .reqs li.ok::before{background:var(--green);border-color:var(--green);box-shadow:0 0 6px var(--green)}
+  .sheet-bg{position:fixed;inset:0;background:rgba(3,6,18,.6);z-index:40;opacity:0;pointer-events:none;transition:opacity .25s}
+  .sheet-bg.show{opacity:1;pointer-events:auto}
+  .sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;background:linear-gradient(180deg,#18214d,#0e1535);border-top:1px solid var(--stroke);border-radius:24px 24px 0 0;padding:18px 16px calc(20px + var(--tg-safe-area-inset-bottom,0px));transform:translateY(105%);transition:transform .32s cubic-bezier(.2,1,.3,1);max-height:88vh;overflow-y:auto}
+  .sheet.show{transform:none}
+  .sheet .grab{width:44px;height:5px;border-radius:4px;background:rgba(255,255,255,.2);margin:0 auto 14px}
+  .sheet label{display:block;font-size:12px;color:var(--muted);margin:2px 0 6px}
+  .amounts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+  .amounts button{background:var(--glass);border:1px solid var(--stroke);color:var(--text);padding:11px 4px;border-radius:12px;font-weight:700;font-size:13px;cursor:pointer}
+  .amounts button.on{border-color:var(--gold);background:rgba(255,207,74,.12);color:var(--gold)}
+  .amounts button[disabled]{opacity:.35}
+  .fine{font-size:11px;color:var(--muted);line-height:1.5;margin-top:10px}
 </style>
 </head>
 <body>
 <div class="loader" id="loader">
-  <img src="https://lh3.googleusercontent.com/d/1tZhMARr1POvJTc6MX9-ErWVXzJ1CeJ5b" alt="Khodi" />
-  <div class="muted" id="loaderText">Memanggil Khodi...</div>
+  <img src="./index_files/maskot_idle.png" alt="Khodi">
+  <div class="muted" id="loaderText">Buka aplikasi ini dari dalam Telegram ya.</div>
 </div>
 
-<div class="bg" id="bg"><div class="city"></div></div>
+<div class="bg" id="bg"><div class="city"></div><i class="dust p" style="left: 4.62584%; --dx: -18.15201775679497px; height: 3.58591px; width: 3.58591px; animation-duration: 16.6244s; animation-delay: -8.98504s;"></i><i class="dust" style="left: 77.1685%; --dx: -16.031782489693434px; height: 2.5985px; width: 2.5985px; animation-duration: 22.641s; animation-delay: -18.5339s;"></i><i class="dust" style="left: 2.65819%; --dx: 0.96988949662191px; height: 3.08689px; width: 3.08689px; animation-duration: 16.4141s; animation-delay: -10.6701s;"></i><i class="dust p" style="left: 33.3594%; --dx: 15.954356421808129px; height: 3.08355px; width: 3.08355px; animation-duration: 14.8182s; animation-delay: -12.4822s;"></i><i class="dust" style="left: 21.6724%; --dx: -36.544554514351134px; height: 2.39741px; width: 2.39741px; animation-duration: 24.2135s; animation-delay: -13.8256s;"></i><i class="dust" style="left: 89.9761%; --dx: 27.88911248086751px; height: 2.44274px; width: 2.44274px; animation-duration: 21.9209s; animation-delay: -15.4396s;"></i><i class="dust p" style="left: 49.2484%; --dx: 26.464641733321983px; height: 2.88454px; width: 2.88454px; animation-duration: 15.8081s; animation-delay: -11.375s;"></i><i class="dust" style="left: 91.0242%; --dx: 37.10950719874276px; height: 2.95276px; width: 2.95276px; animation-duration: 15.3488s; animation-delay: -16.8274s;"></i><i class="dust" style="left: 80.6512%; --dx: -32.85337301936448px; height: 3.75881px; width: 3.75881px; animation-duration: 21.1595s; animation-delay: -6.64771s;"></i><i class="dust p" style="left: 81.4375%; --dx: 34.244206590041216px; height: 3.54222px; width: 3.54222px; animation-duration: 16.1617s; animation-delay: -8.54617s;"></i><i class="dust" style="left: 74.6279%; --dx: -13.722719190926345px; height: 4.7874px; width: 4.7874px; animation-duration: 25.3181s; animation-delay: -6.5072s;"></i><i class="dust" style="left: 23.2134%; --dx: 10.083096629017028px; height: 4.99478px; width: 4.99478px; animation-duration: 14.5779s; animation-delay: -18.642s;"></i><i class="dust p" style="left: 44.8342%; --dx: 13.477949144168278px; height: 3.08503px; width: 3.08503px; animation-duration: 25.6599s; animation-delay: -6.45448s;"></i><i class="dust" style="left: 41.1125%; --dx: 11.54494871716355px; height: 3.86629px; width: 3.86629px; animation-duration: 20.7752s; animation-delay: -17.312s;"></i></div>
 
 <div class="app">
   <div class="header">
-    <img class="avatar" id="avatar" src="https://lh3.googleusercontent.com/d/1tZhMARr1POvJTc6MX9-ErWVXzJ1CeJ5b" alt="Avatar" />
+    <img class="avatar" id="avatar" src="./index_files/maskot_idle.png" alt="Avatar">
     <div class="who"><b id="uname">Pemain</b><span class="lvl" id="ulevel">Level 1</span></div>
-    <div class="pill"><img src="https://lh3.googleusercontent.com/d/12lcT6hzNWK4dDr4LvyzqU2Xy-g3Yhkmc" alt="Nyawa" /><span id="hLives">0</span></div>
-    <div class="pill" id="coinPill"><img src="https://lh3.googleusercontent.com/d/19y69IDvF8YmJgIRNjt6pyvHPPt9mDJMe" alt="Koin" id="coinIcon" /><span id="hCoins">0</span></div>
+    <div class="pill"><img src="./index_files/ikon_nyawa.png" alt="Nyawa"><span id="hLives">0</span></div>
+    <div class="pill" id="coinPill"><img src="./index_files/ikon_koin.png" alt="Koin" id="coinIcon"><span id="hCoins">0</span></div>
   </div>
 
   <div class="pages">
@@ -205,19 +227,19 @@
       <div class="hero">
         <div class="mascot-wrap">
           <div class="ring"></div><div class="ring r2"></div>
-          <div class="tapper" id="tapper"><img class="mascot" id="mascot" src="https://lh3.googleusercontent.com/d/1tZhMARr1POvJTc6MX9-ErWVXzJ1CeJ5b" alt="Khodi" /></div>
-          <div class="mist" id="mist"></div>
+          <div class="tapper" id="tapper"><img class="mascot" id="mascot" src="./index_files/maskot_idle.png" alt="Khodi"></div>
+          <div class="mist" id="mist"><i style="height: 8.98737px; width: 8.98737px; left: -18.2823px; --mx: -0.6113068450009145px; animation-delay: 0s; animation-duration: 3.54497s;"></i><i style="height: 9.26661px; width: 9.26661px; left: -13.5895px; --mx: -18.376884138173036px; animation-delay: 0.4s; animation-duration: 3.00405s;"></i><i style="height: 15.3804px; width: 15.3804px; left: 3.03823px; --mx: 12.414476222049018px; animation-delay: 0.8s; animation-duration: 3.12271s;"></i><i style="height: 9.15701px; width: 9.15701px; left: -0.644006px; --mx: -14.870054638835903px; animation-delay: 1.2s; animation-duration: 3.20922s;"></i><i style="height: 14.5036px; width: 14.5036px; left: 4.91241px; --mx: 25.834464820757724px; animation-delay: 1.6s; animation-duration: 2.53273s;"></i><i style="height: 8.12758px; width: 8.12758px; left: 8.08787px; --mx: 24.24552755511101px; animation-delay: 2s; animation-duration: 2.94554s;"></i><i style="height: 15.9026px; width: 15.9026px; left: -21.2331px; --mx: 15.707253928057902px; animation-delay: 2.4s; animation-duration: 2.75637s;"></i></div>
         </div>
         <div class="bubble" id="bubble">Halo! Aku Khodi, penjaga khodammu.</div>
       </div>
       <div class="stats">
-        <div class="stat" id="statCoins"><img src="https://lh3.googleusercontent.com/d/19y69IDvF8YmJgIRNjt6pyvHPPt9mDJMe" alt="" /><b id="sCoins">0</b><span>Koin</span></div>
-        <div class="stat" id="statStreak"><img src="https://lh3.googleusercontent.com/d/1BAlVTmDEgtzXTeYyihy9LkLkq3dPjlXi" alt="" /><b id="sStreak">0</b><span>Streak</span></div>
-        <div class="stat" id="statLives"><img src="https://lh3.googleusercontent.com/d/12lcT6hzNWK4dDr4LvyzqU2Xy-g3Yhkmc" alt="" /><b id="sLives">0</b><span>Nyawa</span></div>
+        <div class="stat" id="statCoins"><img src="./index_files/ikon_koin.png" alt=""><b id="sCoins">0</b><span>Koin</span></div>
+        <div class="stat" id="statStreak"><img src="./index_files/ikon_streak.png" alt=""><b id="sStreak">0</b><span>Streak</span></div>
+        <div class="stat" id="statLives"><img src="./index_files/ikon_nyawa.png" alt=""><b id="sLives">0</b><span>Nyawa</span></div>
       </div>
       <div class="card">
         <div class="daily">
-          <img src="https://lh3.googleusercontent.com/d/16M-lmQQbZXlx3aa0smJyX6GuUwOCiHPL" alt="Hadiah" />
+          <img src="./index_files/ikon_hadiah_harian.png" alt="Hadiah">
           <div class="info">
             <h2 style="margin:0">Hadiah Harian</h2>
             <div class="muted" id="dailyText">Ambil koin gratis tiap hari</div>
@@ -225,19 +247,32 @@
           </div>
         </div>
         <div style="height:12px"></div>
-        <button class="btn gold" id="btnDaily">Klaim Hadiah</button>
+        <button class="btn gold" id="btnDaily" fdprocessedid="chzdn">Klaim Hadiah</button>
+      </div>
+      <div class="card" id="walletCard">
+        <div class="wallet-top">
+          <div>
+            <div class="muted">Saldo kamu</div>
+            <div class="wallet-bal" id="wBal">Rp0</div>
+          </div>
+          <span class="wallet-tag">DANA</span>
+        </div>
+        <div class="prog"><i id="wProg"></i></div>
+        <div class="muted" id="wProgTxt">Kumpulkan koin untuk tarik saldo</div>
+        <ul class="reqs" id="wReqs"></ul>
+        <button class="btn gold" id="btnWd" fdprocessedid="ed4w59">Tarik Saldo</button>
       </div>
       <div class="card">
         <h2>Bonus Koin</h2>
         <p class="sub">Tonton iklan singkat, dapat +100 koin. Sisa hari ini: <b id="adsLeft">0</b></p>
-        <button class="btn" id="btnAdCoins">Tonton & Dapat 100 Koin</button>
+        <button class="btn" id="btnAdCoins" fdprocessedid="oe9jh">Tonton &amp; Dapat 100 Koin</button>
       </div>
     </section>
 
     <!-- QUIZ -->
     <section class="page" id="p-quiz">
       <div class="hero sm">
-        <div class="mascot-wrap sm"><img class="mascot" id="quizMascot" src="https://lh3.googleusercontent.com/d/1tZhMARr1POvJTc6MX9-ErWVXzJ1CeJ5b" alt="Khodi" /></div>
+        <div class="mascot-wrap sm"><img class="mascot" id="quizMascot" src="./index_files/maskot_idle.png" alt="Khodi"></div>
         <div class="bubble" id="quizBubble">Tiap jawaban benar +30 koin!</div>
       </div>
       <div class="card">
@@ -253,12 +288,12 @@
     <!-- KHODAM -->
     <section class="page" id="p-khodam">
       <div class="hero sm">
-        <div class="mascot-wrap sm"><img class="mascot" src="https://lh3.googleusercontent.com/d/1-6KJjNivLX20QXndrj8KPumTzsnHQewR" alt="Ramal" /></div>
+        <div class="mascot-wrap sm"><img class="mascot" src="./index_files/maskot_ramal.png" alt="Ramal"></div>
       </div>
       <div class="card center">
         <h2>Cek Khodam</h2>
         <p class="sub">Ketik nama (kamu atau temanmu). Hanya hiburan ya!</p>
-        <input class="input" id="khodamName" maxlength="40" placeholder="Masukkan nama..." />
+        <input class="input" id="khodamName" maxlength="40" placeholder="Masukkan nama...">
         <button class="btn" id="btnKhodam">Terawang Sekarang</button>
         <div class="result" id="khodamResult">
           <div class="muted" style="margin-top:16px" id="kFor"></div>
@@ -275,7 +310,7 @@
     <!-- RANK -->
     <section class="page" id="p-rank">
       <div class="hero sm">
-        <div class="mascot-wrap sm"><img class="mascot" src="https://lh3.googleusercontent.com/d/1MBUMQuVVWWH0So5wOFklVGLlK0p0JMKZ" alt="Juara" /></div>
+        <div class="mascot-wrap sm"><img class="mascot" src="./index_files/maskot_menang.png" alt="Juara"></div>
         <div class="bubble">Siapa raja koin hari ini?</div>
       </div>
       <div class="card">
@@ -285,7 +320,7 @@
       </div>
       <div class="card center">
         <h2>Naikkan Peringkatmu</h2>
-        <p class="sub">Undang teman: kamu dapat <b>500 koin</b>, temanmu <b>200 koin</b>.</p>
+        <p class="sub">Undang teman: kamu dapat <b>500 koin</b>, temanmu <b>200 koin</b> setelah dia menonton 10 iklan.</p>
         <button class="btn" id="btnRankInvite">Undang Teman</button>
       </div>
     </section>
@@ -293,11 +328,11 @@
     <!-- FRIENDS -->
     <section class="page" id="p-friends">
       <div class="hero sm">
-        <div class="mascot-wrap sm"><img class="mascot" src="https://lh3.googleusercontent.com/d/1mVjnHnTSxr9yB6UbexvvDNfnCi1CpK_H" alt="Senang" /></div>
+        <div class="mascot-wrap sm"><img class="mascot" src="./index_files/maskot_senang.png" alt="Senang"></div>
       </div>
       <div class="card center">
         <h2>Undang Teman</h2>
-        <p class="sub">Kamu dapat <b>500 koin</b>, temanmu dapat <b>200 koin</b> untuk setiap undangan.</p>
+        <p class="sub">Kamu dapat <b>500 koin</b>, temanmu dapat <b>200 koin</b>. Bonus cair setelah temanmu menonton 10 iklan di aplikasi.</p>
         <div class="ref-stat"><b id="refCount">0</b><span>Teman diundang</span></div>
         <div class="reflink" id="refLink">-</div>
         <div class="row">
@@ -309,14 +344,30 @@
   </div>
 
   <nav class="nav" id="nav">
-    <button data-p="home" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Beranda</button>
-    <button data-p="quiz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01"/></svg>Kuis</button>
-    <button data-p="khodam"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="11" r="7"/><path d="M8 21h8M12 7v4l2 2"/></svg>Khodam</button>
-    <button data-p="rank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21V11M12 21V5M16 21v-7"/></svg>Ranking</button>
-    <button data-p="friends"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M17 4a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4-6"/></svg>Teman</button>
+    <button data-p="home" class="active" fdprocessedid="odcyqo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"></path></svg>Beranda</button>
+    <button data-p="quiz" fdprocessedid="m9hckb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01"></path></svg>Kuis</button>
+    <button data-p="khodam" fdprocessedid="ih4n7o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="11" r="7"></circle><path d="M8 21h8M12 7v4l2 2"></path></svg>Khodam</button>
+    <button data-p="rank" fdprocessedid="jumtgl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21V11M12 21V5M16 21v-7"></path></svg>Ranking</button>
+    <button data-p="friends" fdprocessedid="976rh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20a6.5 6.5 0 0 1 13 0M17 4a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4-6"></path></svg>Teman</button>
   </nav>
 </div>
 <div class="toast" id="toast"></div>
+
+<div class="sheet-bg" id="sheetBg"></div>
+<div class="sheet" id="wdSheet">
+  <div class="grab"></div>
+  <h2>Tarik Saldo ke DANA</h2>
+  <p class="sub">Saldo: <b id="sBal">Rp0</b> · 100 koin = Rp10</p>
+  <label>Pilih jumlah</label>
+  <div class="amounts" id="wdAmounts"></div>
+  <label for="wdNum">Nomor DANA</label>
+  <input class="input" id="wdNum" inputmode="tel" maxlength="16" placeholder="08xxxxxxxxxx" fdprocessedid="ufaysu">
+  <label for="wdName">Nama pemilik akun DANA</label>
+  <input class="input" id="wdName" maxlength="40" placeholder="Sesuai nama di aplikasi DANA" fdprocessedid="auxl39">
+  <button class="btn gold" id="btnWdSubmit" fdprocessedid="n7fjxk">Ajukan Penarikan</button>
+  <button class="btn ghost" id="btnWdClose" style="margin-top:8px" fdprocessedid="dvnqi">Batal</button>
+  <div class="fine">Penarikan diproses manual maks. 3x24 jam. Pastikan nomor dan nama benar; kesalahan data bukan tanggung jawab kami. Satu nomor DANA untuk satu akun. Akun yang terdeteksi curang (multi-akun/bot) akan dibatalkan penarikannya.</div>
+</div>
 
 <script>
 (function () {
@@ -507,8 +558,64 @@
     $('dailyText').textContent = u.daily_claimed ? 'Streak ' + u.streak + ' hari. Mantap!' : 'Hadiah naik tiap hari streak (maks 350)';
     $('refCount').textContent = u.referrals || 0;
     $('refLink').textContent = refLink();
+    renderWallet();
     renderQuiz();
   }
+
+  // ---------- Dompet / Tarik Saldo ----------
+  function rp(n) { return 'Rp' + Number(n || 0).toLocaleString('id-ID'); }
+  var wdAmount = 0;
+  function renderWallet() {
+    var u = state.user; var w = u && u.wallet; if (!w) return;
+    $('wBal').textContent = rp(w.balance_idr); $('sBal').textContent = rp(w.balance_idr);
+    var pct = Math.min(100, Math.round(w.balance_idr / w.min_idr * 100));
+    $('wProg').style.width = pct + '%';
+    $('wProgTxt').textContent = w.balance_idr >= w.min_idr ? 'Saldo cukup untuk ditarik!' : rp(w.min_idr - w.balance_idr) + ' lagi menuju minimal tarik ' + rp(w.min_idr);
+    var gapOk = !w.next_wd_at || Date.now() >= w.next_wd_at;
+    var reqs = [
+      [w.balance_idr >= w.min_idr, 'Saldo minimal ' + rp(w.min_idr)],
+      [w.age_days >= w.min_age_days, 'Akun berumur ' + w.min_age_days + ' hari (' + Math.min(w.age_days, w.min_age_days) + '/' + w.min_age_days + ')'],
+      [u.ads_total >= w.min_ads, 'Tonton ' + w.min_ads + ' iklan (' + Math.min(u.ads_total, w.min_ads) + '/' + w.min_ads + ')'],
+      [gapOk, 'Maks. 1 penarikan per 24 jam']
+    ];
+    $('wReqs').innerHTML = reqs.map(function (r) { return '<li class="' + (r[0] ? 'ok' : '') + '">' + esc(r[1]) + '</li>'; }).join('');
+    var ready = reqs.every(function (r) { return r[0]; });
+    $('btnWd').disabled = !ready;
+    $('btnWd').classList.toggle('ready', ready);
+    $('btnWd').textContent = ready ? 'Tarik Saldo' : 'Penuhi syarat untuk tarik';
+    if (w.dana_number && !$('wdNum').value) $('wdNum').value = w.dana_number;
+    if (w.dana_name && !$('wdName').value) $('wdName').value = w.dana_name;
+    var opts = [w.min_idr, w.min_idr * 2, w.min_idr * 5]; var html = '';
+    if (wdAmount > w.balance_idr) wdAmount = 0;
+    opts.forEach(function (a) { html += '<button data-a="' + a + '"' + (a > w.balance_idr ? ' disabled' : '') + (a === wdAmount ? ' class="on"' : '') + '>' + rp(a) + '</button>'; });
+    $('wdAmounts').innerHTML = html;
+    Array.prototype.forEach.call($('wdAmounts').querySelectorAll('button'), function (b) {
+      b.onclick = function () { tap(); wdAmount = Number(b.getAttribute('data-a')); renderWallet(); };
+    });
+  }
+  function openSheet(open) { $('sheetBg').classList.toggle('show', open); $('wdSheet').classList.toggle('show', open); }
+  $('btnWd').onclick = function () { tap(); if (!wdAmount && state.user) wdAmount = state.user.wallet.min_idr; renderWallet(); openSheet(true); };
+  $('btnWdClose').onclick = function () { openSheet(false); };
+  $('sheetBg').onclick = function () { openSheet(false); };
+  $('btnWdSubmit').onclick = function () {
+    if (state.busy) return;
+    var num = $('wdNum').value.trim(), name = $('wdName').value.trim();
+    if (!wdAmount) { toast('Pilih jumlah penarikan'); return; }
+    if (!/^(\+?62|0)8[0-9\s-]{8,14}$/.test(num)) { toast('Nomor DANA tidak valid'); return; }
+    if (name.length < 3) { toast('Isi nama pemilik akun DANA'); return; }
+    var go = function () {
+      state.busy = true; var b = $('btnWdSubmit'); b.disabled = true; b.textContent = 'Mengirim...';
+      api('withdraw', { amount_idr: wdAmount, dana_number: num, dana_name: name }).then(function (d) {
+        toast(d.message);
+        if (d.ok) { haptic('success'); openSheet(false); confetti($('walletCard')); mood('menang', 'Pengajuan ' + rp(d.result.amount_idr) + ' sedang diproses!'); wdAmount = 0; }
+        else haptic('error');
+      }).catch(function (e) { toast(e.message || 'Koneksi bermasalah'); })
+        .then(function () { state.busy = false; b.disabled = false; b.textContent = 'Ajukan Penarikan'; });
+    };
+    var msg = 'Tarik ' + rp(wdAmount) + ' ke DANA ' + num + ' a.n. ' + name + '?';
+    if (tg && tg.showConfirm) { try { tg.showConfirm(msg, function (yes) { if (yes) go(); }); return; } catch (e) {} }
+    if (window.confirm(msg)) go();
+  };
 
   function refLink() {
     if (!state.user) return '-';
@@ -575,7 +682,7 @@
     show({ type: 'end', ymid: state.user.id + '-' + purpose + '-' + Date.now(), requestVar: purpose }).then(function () {
       return api('ad_reward', { purpose: purpose }).then(function (d) {
         toast(d.message);
-        if (d.ok) { haptic('success'); if (purpose === 'coins') celebrate(btn, 100); else confetti(btn); mood('senang', purpose === 'life' ? 'Nyawa bertambah!' : 'Koin bertambah!'); }
+        if (d.ok) { haptic('success'); if (purpose === 'coins') celebrate(btn, (d.result && d.result.ref_bonus) ? 300 : 100); else confetti(btn); mood('senang', (d.result && d.result.ref_bonus) ? 'Bonus undangan cair! +200 koin' : (purpose === 'life' ? 'Nyawa bertambah!' : 'Koin bertambah!')); }
       });
     }).catch(function () { toast('Iklan dilewati atau gagal dimuat.'); })
       .then(function () { state.busy = false; state.lastInterstitial = Date.now(); btn.textContent = label; btn.disabled = false; renderQuiz(); if (state.user) $('btnAdCoins').disabled = state.user.ads_left <= 0; });
@@ -684,5 +791,6 @@
   }).catch(function (e) { $('loaderText').textContent = e.message || 'Gagal terhubung. Coba buka ulang.'; });
 })();
 </script>
-</body>
-</html>
+
+
+<span id="PING_IFRAME_FORM_DETECTION" style="display: none;"></span></body></html>
