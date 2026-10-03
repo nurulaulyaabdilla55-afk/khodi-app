@@ -246,6 +246,67 @@
   .badge.Berhasil{background:rgba(62,240,161,.15);color:var(--green)}
   .badge.Ditolak{background:rgba(255,93,122,.15);color:var(--red)}
   .empty{color:var(--muted);font-size:13px;text-align:center;padding:18px 0}
+  /* ---- Tahap 2 ---- */
+  .rar-B{--rc:#9fb3d1}.rar-L{--rc:#4fe3ff}.rar-E{--rc:#b58cff}.rar-X{--rc:#ffcf4a}
+  .rbadge{display:inline-block;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px;color:#06102a;background:var(--rc,#9fb3d1);margin-top:6px}
+  .gacha-orb{position:relative;width:130px;height:130px;margin:6px auto 12px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.35),rgba(155,107,255,.55) 40%,rgba(18,26,61,.9) 75%);box-shadow:0 0 40px rgba(155,107,255,.5),inset 0 0 30px rgba(79,227,255,.4);display:flex;align-items:center;justify-content:center;font-size:42px;font-weight:900;color:rgba(255,255,255,.85);animation:pulse 2.4s ease-in-out infinite}
+  .gacha-orb.spin{animation:orbspin .9s cubic-bezier(.4,0,.2,1) 2}
+  @keyframes orbspin{0%{transform:rotate(0) scale(1)}50%{transform:rotate(180deg) scale(1.15);filter:brightness(1.6)}100%{transform:rotate(360deg) scale(1)}}
+  .gacha-res{display:none;text-align:center;padding:10px;border-radius:16px;border:1px solid var(--rc);background:linear-gradient(180deg,rgba(255,255,255,.04),transparent);box-shadow:0 0 24px color-mix(in srgb,var(--rc) 35%,transparent);margin-bottom:12px}
+  .gacha-res.show{display:block;animation:pop .5s cubic-bezier(.2,1.4,.4,1)}
+  .gacha-res .gn{font-size:20px;font-weight:900;color:var(--rc)}
+  .col-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+  .col-item{position:relative;border-radius:14px;padding:10px 6px;text-align:center;font-size:11.5px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);min-height:74px;cursor:pointer}
+  .col-item.own{border-color:var(--rc);box-shadow:inset 0 0 14px color-mix(in srgb,var(--rc) 25%,transparent)}
+  .col-item.lock{opacity:.45;cursor:default}
+  .col-item .ci{font-size:20px;font-weight:900;color:var(--rc);line-height:1.2}
+  .col-item .cn{margin-top:4px;line-height:1.25}
+  .col-item .cc{position:absolute;top:4px;right:6px;font-size:10px;color:var(--muted)}
+  .col-item.comp::after{content:'Pendamping';position:absolute;left:50%;bottom:-7px;transform:translateX(-50%);font-size:9px;font-weight:800;background:var(--gold);color:#06102a;padding:1px 6px;border-radius:8px}
+  .comp-row{display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.2);border-radius:14px;padding:10px 12px;font-size:13px}
+  .comp-row b{color:var(--gold)}
+  .tier{display:flex;align-items:center;gap:12px}
+  .tier .tico{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;color:#06102a;flex:none}
+  .t0{background:linear-gradient(135deg,#e7a46a,#a0552b)}.t1{background:linear-gradient(135deg,#f1f5fb,#9aa7bb)}.t2{background:linear-gradient(135deg,#ffe27a,#d99a10)}.t3{background:linear-gradient(135deg,#d9fbff,#6fb7c9)}.t4{background:linear-gradient(135deg,#bff4ff,#7aa8ff 50%,#c08bff)}
+  .prizes{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:10px;font-size:11px;text-align:center}
+  .prizes div{background:rgba(255,255,255,.05);border-radius:10px;padding:6px 2px}
+  .prizes b{display:block;color:var(--gold);font-size:12px}
+  .bdg-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .bdg{font-size:11px;font-weight:800;padding:4px 9px;border-radius:20px;background:rgba(255,207,74,.14);color:var(--gold);border:1px solid rgba(255,207,74,.35)}
+  .cat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0 12px}
+  .cat-grid button{background:var(--glass);border:1px solid var(--stroke);color:var(--text);padding:12px 6px;border-radius:12px;font-weight:700;font-size:13px;cursor:pointer}
+  .cat-grid button.on{border-color:var(--cyan);background:rgba(79,227,255,.12);color:var(--cyan)}
+  .timer{position:relative;width:54px;height:54px;flex:none}
+  .timer svg{width:54px;height:54px;transform:rotate(-90deg)}
+  .timer circle{fill:none;stroke-width:5}
+  .timer .bgc{stroke:rgba(255,255,255,.1)}
+  .timer .fgc{stroke:var(--cyan);stroke-linecap:round;transition:stroke-dashoffset .1s linear,stroke .3s}
+  .timer span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px}
+  .card-preview{width:100%;border-radius:18px;display:block;box-shadow:0 10px 40px rgba(0,0,0,.5);margin-bottom:12px}
+  /* ---- Tata letak rapi ---- */
+  .seg{position:sticky;top:0;z-index:4;display:flex;gap:4px;padding:4px;margin:0 0 14px;border-radius:14px;background:rgba(12,18,44,.88);border:1px solid var(--stroke);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+  .seg button{flex:1;border:0;background:none;color:var(--muted);padding:10px 4px;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer;transition:all .2s;white-space:nowrap}
+  .seg button.on{background:linear-gradient(135deg,rgba(79,227,255,.22),rgba(155,107,255,.22));color:var(--text);box-shadow:inset 0 0 0 1px rgba(79,227,255,.35)}
+  .seg button span{font-size:11px;color:var(--cyan)}
+  .sub{display:none}
+  .sub.on{display:block;animation:fadeUp .3s ease}
+  .card h2{font-size:17px;letter-spacing:.2px}
+  .mini-wallet{display:grid;grid-template-columns:1fr auto;align-items:center;gap:6px 12px}
+  .mini-wallet .wallet-bal{font-size:24px}
+  .mw-right{text-align:right}
+  .mw-right .muted{font-size:11.5px;margin-bottom:6px}
+  .btn.sm{width:auto;padding:9px 14px;font-size:13px;border-radius:12px}
+  .header .sound-btn{width:34px;height:34px}
+  .header{gap:8px}
+  .pill{padding:6px 9px}
+  .stats{margin:10px 0 14px}
+  .hero{padding:0}
+  .mascot-wrap{width:200px;height:200px}
+  .mascot-wrap.sm{width:130px;height:130px}
+  .bubble{font-size:13px;line-height:1.4}
+  .mission{padding:9px 0}
+  .col-grid{grid-template-columns:repeat(3,1fr)}
+  @media (min-width:420px){.col-grid{grid-template-columns:repeat(4,1fr)}}
   .banned{background:rgba(255,93,122,.12);border:1px solid var(--red);color:#ffd0d9;padding:12px;border-radius:14px;font-size:13px;margin-bottom:14px;display:none}
 </style>
 </head>
@@ -261,6 +322,7 @@
   <div class="header">
     <img class="avatar" id="avatar" src="https://lh3.googleusercontent.com/d/1tZhMARr1POvJTc6MX9-ErWVXzJ1CeJ5b" alt="Avatar" />
     <div class="who"><b id="uname">Pemain</b><span class="lvl" id="ulevel">Level 1</span></div>
+    <button class="sound-btn" id="btnRules" aria-label="Aturan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01"/></svg></button>
     <button class="sound-btn" id="btnSound" aria-label="Suara"></button>
     <div class="pill"><img src="https://lh3.googleusercontent.com/d/12lcT6hzNWK4dDr4LvyzqU2Xy-g3Yhkmc" alt="Nyawa" /><span id="hLives">0</span></div>
     <div class="pill" id="coinPill"><img src="https://lh3.googleusercontent.com/d/19y69IDvF8YmJgIRNjt6pyvHPPt9mDJMe" alt="Koin" id="coinIcon" /><span id="hCoins">0</span></div>
@@ -299,31 +361,22 @@
         <div class="mhead"><h2 style="margin:0">Misi Harian</h2><small id="missionReset">Reset 00:00 WIB</small></div>
         <div id="missionList"><div class="empty">Memuat misi...</div></div>
       </div>
-      <div class="card" id="walletCard">
-        <div class="wallet-top">
-          <div>
-            <div class="muted">Saldo kamu</div>
-            <div class="wallet-bal" id="wBal">Rp0</div>
-          </div>
-          <span class="wallet-tag">DANA</span>
-        </div>
-        <div class="prog"><i id="wProg"></i></div>
-        <div class="muted" id="wProgTxt">Kumpulkan koin untuk tarik saldo</div>
-        <div class="first-wd" id="firstWdBox">Bonus pemula: <b>tarik pertama cukup Rp2.000</b> (sekali per akun) untuk membuktikan pembayaran nyata.</div>
-        <ul class="reqs" id="wReqs"></ul>
-        <button class="btn gold" id="btnWd">Tarik Saldo</button>
-        <button class="linkbtn" id="btnHistory">Lihat riwayat koin & penarikan</button>
+      <div class="card mini-wallet" id="miniWallet">
+        <div><div class="muted">Saldo kamu</div><div class="wallet-bal" id="mwBal">Rp0</div></div>
+        <div class="mw-right"><div class="muted" id="mwTxt">Menuju tarik pertama</div><button class="btn gold sm" id="btnGoWallet">Buka Dompet</button></div>
+        <div class="prog" style="grid-column:1/-1;margin:4px 0 0"><i id="mwProg"></i></div>
       </div>
       <div class="card">
         <h2>Bonus Koin</h2>
         <p class="sub">Tonton iklan singkat, dapat +<span class="adCoins">50</span> koin. Sisa hari ini: <b id="adsLeft">0</b></p>
         <button class="btn" id="btnAdCoins">Tonton & Dapat <span class="adCoins">50</span> Koin</button>
       </div>
-      <button class="rules-link" id="btnRules">Cara Bermain, Aturan & Syarat</button>
     </section>
 
     <!-- QUIZ -->
     <section class="page" id="p-quiz">
+      <div class="seg" data-seg="quiz"><button class="on" data-s="daily">Kuis Harian</button><button data-s="blitz">Mode Kilat</button></div>
+      <div class="sub on" data-sub="quiz:daily">
       <div class="hero sm">
         <div class="mascot-wrap sm"><img class="mascot" id="quizMascot" src="https://lh3.googleusercontent.com/d/1tZhMARr1POvJTc6MX9-ErWVXzJ1CeJ5b" alt="Khodi" /></div>
         <div class="bubble" id="quizBubble">Tiap jawaban benar +30 koin!</div>
@@ -336,10 +389,22 @@
         <div class="q-progress" id="qProgress"></div>
         <div id="quizBox"></div>
       </div>
+      </div>
+      <div class="sub" data-sub="quiz:blitz">
+      <div class="card" id="blitzCard">
+        <div class="row" style="align-items:center;justify-content:space-between">
+          <h2 style="margin:0">Mode Kilat</h2>
+          <span class="muted" id="blitzInfo">1x sehari</span>
+        </div>
+        <div id="blitzBox"></div>
+      </div>
+      </div>
     </section>
 
     <!-- KHODAM -->
     <section class="page" id="p-khodam">
+      <div class="seg" data-seg="khodam"><button class="on" data-s="cek">Cek Khodam</button><button data-s="gacha">Gacha</button><button data-s="koleksi">Koleksi <span id="colBadge"></span></button></div>
+      <div class="sub on" data-sub="khodam:cek">
       <div class="hero sm">
         <div class="mascot-wrap sm"><img class="mascot" src="https://lh3.googleusercontent.com/d/1-6KJjNivLX20QXndrj8KPumTzsnHQewR" alt="Ramal" /></div>
       </div>
@@ -354,9 +419,33 @@
           <div id="kDesc"></div>
           <div class="power"><i id="kPower"></i></div>
           <div class="muted" id="kPowerTxt"></div>
+          <div id="kRar"></div>
           <div style="height:12px"></div>
-          <button class="btn ghost" id="btnShareKhodam">Bagikan ke Teman</button>
+          <div class="row">
+            <button class="btn" id="btnCardKhodam">Buat Kartu</button>
+            <button class="btn ghost" id="btnShareKhodam">Kirim Link</button>
+          </div>
         </div>
+      </div>
+      </div>
+      <div class="sub" data-sub="khodam:gacha">
+      <div class="card center" id="gachaCard">
+        <h2>Gacha Khodam</h2>
+        <p class="sub">Kumpulkan 24 khodam. Makin langka, makin besar bonus pendampingnya.</p>
+        <div class="gacha-orb" id="gachaOrb">?</div>
+        <div class="gacha-res" id="gachaRes"></div>
+        <button class="btn gold" id="btnGacha">Gacha Gratis</button>
+        <button class="btn ghost" id="btnGachaAd" style="margin-top:8px">Gacha lagi (tonton iklan)</button>
+        <div class="fine" style="text-align:left">Peluang: Biasa 60% &middot; Langka 28% &middot; Epik 10% &middot; Legendaris 2%. Dapat duplikat diganti koin (5/15/40/100). Hanya hiburan, bukan ramalan sungguhan.</div>
+      </div>
+      </div>
+      <div class="sub" data-sub="khodam:koleksi">
+      <div class="card" id="colCard">
+        <div class="row" style="align-items:center;justify-content:space-between"><h2 style="margin:0">Koleksi</h2><span class="muted" id="colCount">0/24</span></div>
+        <div class="comp-row" id="compRow" style="margin-top:10px">Belum ada pendamping. Gacha dulu ya!</div>
+        <div class="col-grid" id="colGrid"></div>
+        <div class="fine">Ketuk khodam yang sudah kamu punya untuk menjadikannya pendamping. Bonus: Langka +5%, Epik +10%, Legendaris +20% koin hadiah harian & kuis.</div>
+      </div>
       </div>
     </section>
 
@@ -366,23 +455,56 @@
         <div class="mascot-wrap sm"><img class="mascot" src="https://lh3.googleusercontent.com/d/1MBUMQuVVWWH0So5wOFklVGLlK0p0JMKZ" alt="Juara" /></div>
         <div class="bubble">Siapa raja koin hari ini?</div>
       </div>
-      <div class="card">
-        <h2>Top 10 Pemain</h2>
-        <p class="sub">Kumpulkan koin sebanyak-banyaknya!</p>
-        <div id="rankList"><div class="muted center">Memuat...</div></div>
+      <div class="card" id="leagueCard">
+        <div class="tier">
+          <div class="tico t0" id="tierIco">P</div>
+          <div style="flex:1;min-width:0">
+            <div class="muted">Liga minggu ini</div>
+            <div style="font-size:20px;font-weight:900" id="tierName">Perunggu</div>
+            <div class="muted" id="weekPts">0 poin</div>
+          </div>
+        </div>
+        <div class="prog"><i id="tierProg"></i></div>
+        <div class="muted" id="tierNext"></div>
+        <div class="muted" id="weekEnd" style="margin-top:4px"></div>
+        <div class="prizes" id="prizeGrid"></div>
+        <div class="bdg-list" id="badgeList"></div>
+        <div class="fine">Poin liga = semua koin yang kamu dapat minggu ini (Senin-Minggu). Top 10 dapat koin + lencana tiap Senin pagi.</div>
       </div>
-      <div class="card center">
-        <h2>Naikkan Peringkatmu</h2>
-        <p class="sub">Undang teman: kamu dapat <b>500 koin</b>, temanmu <b>200 koin</b> setelah dia menonton 10 iklan.</p>
-        <button class="btn" id="btnRankInvite">Undang Teman</button>
+      <div class="card">
+        <div class="tabs" id="rankTabs"><button class="on" data-r="week">Minggu Ini</button><button data-r="all">Sepanjang Masa</button></div>
+        <div id="rankList"><div class="muted center">Memuat...</div></div>
       </div>
     </section>
 
     <!-- FRIENDS -->
     <section class="page" id="p-friends">
-      <div class="hero sm">
-        <div class="mascot-wrap sm"><img class="mascot" src="https://lh3.googleusercontent.com/d/1mVjnHnTSxr9yB6UbexvvDNfnCi1CpK_H" alt="Senang" /></div>
+      <div class="seg" data-seg="wallet"><button class="on" data-s="saldo">Saldo & Tarik</button><button data-s="undang">Undang Teman</button></div>
+      <div class="sub on" data-sub="wallet:saldo">
+        <div class="card" id="walletCard">
+        <div class="wallet-top">
+          <div>
+            <div class="muted">Saldo kamu</div>
+            <div class="wallet-bal" id="wBal">Rp0</div>
+          </div>
+          <span class="wallet-tag">DANA</span>
+        </div>
+        <div class="prog"><i id="wProg"></i></div>
+        <div class="muted" id="wProgTxt">Kumpulkan koin untuk tarik saldo</div>
+        <div class="first-wd" id="firstWdBox">Bonus pemula: <b>tarik pertama cukup Rp2.000</b> (sekali per akun) untuk membuktikan pembayaran nyata.</div>
+        <ul class="reqs" id="wReqs"></ul>
+        <button class="btn gold" id="btnWd">Tarik Saldo</button>
+        <button class="linkbtn" id="btnHistory">Lihat riwayat koin & penarikan</button>
       </div>
+        <div class="card">
+          <div class="row" style="align-items:center;justify-content:space-between;margin-bottom:6px"><h2 style="margin:0">Riwayat Terakhir</h2><button class="linkbtn" style="width:auto;padding:0" id="btnHistory2">Lihat semua</button></div>
+          <div id="recentTx"><div class="empty">Belum ada transaksi.</div></div>
+        </div>
+      </div>
+      <div class="sub" data-sub="wallet:undang">
+        <div class="hero sm">
+          <div class="mascot-wrap sm"><img class="mascot" src="https://lh3.googleusercontent.com/d/1mVjnHnTSxr9yB6UbexvvDNfnCi1CpK_H" alt="Senang" /></div>
+        </div>
       <div class="card center">
         <h2>Undang Teman</h2>
         <p class="sub">Kamu dapat <b>500 koin</b>, temanmu dapat <b>200 koin</b>. Bonus cair setelah temanmu menonton 10 iklan di aplikasi.</p>
@@ -393,6 +515,7 @@
           <button class="btn ghost" id="btnCopy">Salin</button>
         </div>
       </div>
+      </div>
     </section>
   </div>
 
@@ -401,7 +524,7 @@
     <button data-p="quiz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01"/></svg>Kuis</button>
     <button data-p="khodam"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="11" r="7"/><path d="M8 21h8M12 7v4l2 2"/></svg>Khodam</button>
     <button data-p="rank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21V11M12 21V5M16 21v-7"/></svg>Ranking</button>
-    <button data-p="friends"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M17 4a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4-6"/></svg>Teman</button>
+    <button data-p="friends"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M16 14.5h2"/></svg>Dompet</button>
   </nav>
 </div>
 <div class="toast" id="toast"></div>
@@ -422,6 +545,19 @@
   <div class="fine">Penarikan diproses manual maks. 3x24 jam. Pastikan nomor dan nama benar; kesalahan data bukan tanggung jawab kami. Satu nomor DANA untuk satu akun. Akun yang terdeteksi curang (multi-akun/bot) akan dibatalkan penarikannya. <a href="#" id="lnkRulesWd" style="color:var(--cyan)">Baca aturan lengkap</a></div>
 </div>
 
+<div class="sheet-bg" id="cardBg"></div>
+<div class="sheet" id="cardSheet">
+  <div class="grab"></div>
+  <h2>Kartu Khodam</h2>
+  <img class="card-preview" id="cardImg" alt="Kartu khodam" />
+  <div class="row">
+    <button class="btn" id="btnCardShare">Bagikan</button>
+    <button class="btn ghost" id="btnCardSave">Simpan</button>
+  </div>
+  <div class="fine" id="cardHint">Kalau tombol Bagikan tidak muncul pilihan aplikasi, tekan lama gambar di atas lalu pilih Simpan, kemudian kirim ke teman atau pasang di story.</div>
+  <button class="btn ghost" id="btnCardClose" style="margin-top:8px">Tutup</button>
+</div>
+
 <div class="sheet-bg" id="histBg"></div>
 <div class="sheet" id="histSheet">
   <div class="grab"></div>
@@ -436,6 +572,15 @@
   <div class="grab"></div>
   <h2>Cara Bermain, Aturan & Syarat</h2>
 
+  <h3>Cara bermain (singkat)</h3>
+  <ol>
+    <li>Buka app setiap hari dan <b>klaim hadiah harian</b> supaya streak naik.</li>
+    <li>Selesaikan <b>misi harian</b> lalu tekan Klaim di tiap misi.</li>
+    <li>Main <b>kuis harian</b> (pakai nyawa) dan <b>Mode Kilat</b> (tanpa nyawa).</li>
+    <li>Di tab Khodam: <b>cek khodam</b>, buat kartunya untuk dibagikan, dan <b>gacha</b> untuk melengkapi koleksi.</li>
+    <li>Kumpulkan koin untuk naik <b>liga mingguan</b> dan tarik saldo ke <b>DANA</b>.</li>
+  </ol>
+
   <h3>Cara dapat koin</h3>
   <div class="rate">
     <span>Klaim hadiah harian (naik tiap hari streak)</span><b>50 - 350</b>
@@ -443,6 +588,8 @@
     <span>Cek khodam (1x sehari)</span><b>20</b>
     <span>Tonton iklan (maks. 20x/hari)</span><b><span class="adCoins">50</span></b>
     <span>Misi harian (semua misi)</span><b>s.d. 260</b>
+    <span>Mode Kilat (10 soal, 1x sehari)</span><b>s.d. 150</b>
+    <span>Gacha duplikat</span><b>5 - 100</b>
     <span>Undang teman (setelah temanmu nonton 10 iklan)</span><b>500</b>
     <span>Bonus untuk teman yang diundang</span><b>200</b>
   </div>
@@ -451,7 +598,23 @@
   <ul>
     <li><b>Streak</b> = jumlah hari berturut-turut klaim hadiah harian. Bolong 1 hari, streak kembali ke 1.</li>
     <li><b>Nyawa</b> dipakai di kuis. Jawaban salah mengurangi 1 nyawa. Nyawa diisi ulang jadi 5 setiap hari (00:00 WIB), atau tambah lewat iklan.</li>
-    <li>Hadiah harian, kuis, dan batas iklan di-reset setiap pukul 00:00 WIB.</li>
+    <li>Hadiah harian, kuis, misi, gacha gratis, Mode Kilat, dan batas iklan di-reset setiap pukul 00:00 WIB.</li>
+  </ul>
+
+  <h3>Misi harian</h3>
+  <ul>
+    <li>Klaim hadiah harian +20, jawab 3 soal kuis +30, tonton 5 iklan +50, cek khodam +10, ajak 1 teman (bonus cair) +100.</li>
+    <li>Selesaikan 4 misi utama (tanpa misi ajak teman) untuk bonus tambahan +50.</li>
+    <li>Hadiah misi harus diklaim sebelum 00:00 WIB. Misi yang tidak diklaim hangus.</li>
+  </ul>
+
+  <h3>Koleksi, Liga & Mode Kilat</h3>
+  <ul>
+    <li><b>Gacha khodam</b>: 1x gratis per hari, tambah maks. 3x lewat iklan. Peluang: Biasa 60%, Langka 28%, Epik 10%, Legendaris 2%. Khodam yang sudah dimiliki diganti koin (5 / 15 / 40 / 100).</li>
+    <li><b>Pendamping</b>: pilih 1 khodam dari koleksimu. Bonus koin hadiah harian & kuis: Langka +5%, Epik +10%, Legendaris +20%. Koleksi khodam tidak bisa dijual, ditukar, atau dicairkan.</li>
+    <li><b>Liga mingguan</b>: poin = koin yang didapat Senin 00:00 - Minggu 23:59 WIB (koin yang dipakai menarik saldo tidak mengurangi poin). Tingkat: Perunggu, Perak (1.000), Emas (3.000), Platinum (6.000), Berlian (10.000). Poin kembali ke 0 setiap Senin.</li>
+    <li><b>Hadiah liga</b> dibagikan otomatis tiap Senin pagi: Juara 1: 5.000 koin, Juara 2: 3.000, Juara 3: 2.000, peringkat 4-10: 500, ditambah lencana. Akun yang melanggar aturan tidak mendapat hadiah.</li>
+    <li><b>Mode Kilat</b>: 10 soal dari kategori pilihan, 10 detik per soal, 1x sehari. Benar +10 koin, sempurna +50 koin. Tidak memakai nyawa.</li>
   </ul>
 
   <h3>Tarik saldo (DANA)</h3>
@@ -487,7 +650,10 @@
   <ul>
     <li>Koin adalah poin hadiah di dalam aplikasi, <b>bukan uang, tabungan, atau investasi</b>. Kami tidak pernah meminta setoran atau deposit dalam bentuk apa pun.</li>
     <li>Fitur Cek Khodam <b>hanya hiburan</b> dan tidak memiliki makna spiritual atau ramalan sungguhan.</li>
-    <li>Ketersediaan iklan tergantung penyedia iklan dan bisa kosong sewaktu-waktu.</li>
+    <li>Ketersediaan iklan tergantung penyedia iklan dan bisa kosong sewaktu-waktu. Koin hanya masuk jika iklan ditonton sampai selesai.</li>
+    <li>Tidak ada jaminan penghasilan. Jumlah yang bisa dikumpulkan tergantung aktivitasmu dan batas harian.</li>
+    <li>Data yang kami simpan: ID dan nama Telegram, aktivitas di aplikasi, serta nomor dan nama DANA yang kamu isi saat menarik saldo. Data hanya dipakai untuk menjalankan aplikasi dan memproses penarikan.</li>
+    <li>Aplikasi ini tidak berafiliasi dengan Telegram maupun DANA.</li>
     <li>Aturan, kurs, dan hadiah dapat berubah sewaktu-waktu. Program dapat dihentikan dengan pemberitahuan di aplikasi.</li>
   </ul>
 
@@ -647,6 +813,8 @@
     function () { return 'Sudah klaim hadiah harian hari ini?'; },
     function () { return 'Coba kuis harian, siapa tahu benar semua!'; },
     function () { return 'Mau aku terawang khodam temanmu?'; },
+    function () { return 'Sudah gacha khodam hari ini? Ada yang Legendaris lho!'; },
+    function () { return 'Coba Mode Kilat, 10 detik per soal!'; },
     function () { return 'Ajak teman, kita dapat 500 koin!'; },
     function () { return 'Aku penjaga khodammu. Rawr!'; },
     function () { return 'Koinmu makin banyak, mantap!'; }
@@ -740,10 +908,245 @@
     if (u.ad_coins) Array.prototype.forEach.call(document.querySelectorAll('.adCoins'), function (el) { el.textContent = u.ad_coins; });
     $('bannedBox').style.display = u.banned ? 'block' : 'none';
     renderWallet();
+    renderMiniWallet();
+    renderRecentTx();
     renderMissions();
+    renderCollection();
+    renderLeague();
+    renderBlitz();
     if ($('histSheet').classList.contains('show')) renderHistory();
     renderQuiz();
   }
+
+  // ---------- Sub-tab & navigasi ----------
+  function goTab(p, sub) {
+    var nb = document.querySelector('#nav button[data-p="' + p + '"]'); if (nb) nb.click();
+    if (sub) setSub(sub.split(':')[0], sub.split(':')[1]);
+  }
+  function setSub(seg, s) {
+    document.querySelectorAll('.seg[data-seg="' + seg + '"] button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-s') === s); });
+    document.querySelectorAll('.sub[data-sub^="' + seg + ':"]').forEach(function (el) { el.classList.toggle('on', el.getAttribute('data-sub') === seg + ':' + s); });
+    document.querySelector('.pages').scrollTop = 0;
+  }
+  document.querySelectorAll('.seg').forEach(function (sg) {
+    sg.querySelectorAll('button').forEach(function (b) {
+      b.onclick = function () { SFX.play('nav'); try { tg.HapticFeedback.selectionChanged(); } catch (e) {} setSub(sg.getAttribute('data-seg'), b.getAttribute('data-s')); };
+    });
+  });
+  $('btnGoWallet').onclick = function () { tap(); goTab('friends', 'wallet:saldo'); };
+  $('btnHistory2').onclick = function () { tap(); openHist(true); };
+  function renderMiniWallet() {
+    var w = state.user && state.user.wallet; if (!w) return;
+    var minNow = w.first_available ? w.first_idr : w.min_idr;
+    $('mwBal').textContent = rp(w.balance_idr);
+    $('mwProg').style.width = Math.min(100, Math.round(w.balance_idr / minNow * 100)) + '%';
+    $('mwTxt').textContent = w.balance_idr >= minNow ? 'Siap ditarik!' : (w.first_available ? 'Menuju tarik pertama ' : 'Menuju tarik ') + rp(minNow);
+  }
+  function renderRecentTx() {
+    var tx = (state.user && state.user.tx) || [];
+    $('recentTx').innerHTML = tx.length ? tx.slice(0, 4).map(function (t) { var plus = t.a >= 0; return '<div class="txrow"><div class="tn">' + esc(t.n) + '<small>' + fdate(t.t) + '</small></div><div class="ta ' + (plus ? 'plus' : 'minus') + '">' + (plus ? '+' : '') + Number(t.a).toLocaleString('id-ID') + '</div></div>'; }).join('') : '<div class="empty">Belum ada transaksi.</div>';
+  }
+
+  // ---------- Koleksi & Gacha ----------
+  var RCODE = { B: 'B', L: 'L', E: 'E', X: 'X' };
+  function initials(n) { return String(n || '?').split(' ').map(function (w) { return w.charAt(0); }).join('').slice(0, 2).toUpperCase(); }
+  function renderCollection() {
+    var c = state.user && state.user.collection; if (!c) return;
+    var own = {}; c.owned.forEach(function (o) { own[o.name] = o; });
+    $('colCount').textContent = c.owned.length + '/' + c.catalog.length;
+    $('colBadge').textContent = c.owned.length + '/' + c.catalog.length;
+    var order = { X: 0, E: 1, L: 2, B: 3 };
+    var cat = c.catalog.slice().sort(function (a, b) { return order[a.rarity] - order[b.rarity]; });
+    $('colGrid').innerHTML = cat.map(function (k) {
+      var o = own[k.name];
+      return '<div class="col-item rar-' + k.rarity + (o ? ' own' : ' lock') + (o && c.companion === k.name ? ' comp' : '') + '" data-n="' + esc(k.name) + '">' + (o && o.count > 1 ? '<span class="cc">x' + o.count + '</span>' : '') + '<div class="ci">' + (o ? esc(initials(k.name)) : '?') + '</div><div class="cn">' + (o ? esc(k.name) : esc(c.rarities[k.rarity].n)) + '</div></div>';
+    }).join('');
+    Array.prototype.forEach.call($('colGrid').querySelectorAll('.col-item.own'), function (el) {
+      el.onclick = function () {
+        var n = el.getAttribute('data-n'); if (n === c.companion || state.busy) return;
+        state.busy = true; tap();
+        api('equip', { name: n }).then(function (d) { toast(d.message); if (d.ok) SFX.play('success'); }).catch(function (e) { toast(e.message || 'Koneksi bermasalah'); }).then(function () { state.busy = false; });
+      };
+    });
+    if (c.companion) {
+      var rk = (own[c.companion] && own[c.companion].rarity) || 'B';
+      $('compRow').innerHTML = '<span class="rbadge rar-' + rk + '" style="margin:0">' + esc(c.rarities[rk].n) + '</span><span style="flex:1">Pendamping: <b>' + esc(c.companion) + '</b></span><span class="muted">' + (c.companion_bonus ? '+' + c.companion_bonus + '% koin' : 'tanpa bonus') + '</span>';
+    } else $('compRow').textContent = 'Belum ada pendamping. Gacha dulu ya!';
+    $('btnGacha').disabled = !c.gacha_free;
+    $('btnGacha').textContent = c.gacha_free ? 'Gacha Gratis' : 'Gacha gratis sudah dipakai';
+    $('btnGacha').classList.toggle('ready', c.gacha_free);
+    $('btnGachaAd').disabled = c.gacha_ad_left <= 0;
+    $('btnGachaAd').textContent = c.gacha_ad_left > 0 ? 'Gacha lagi (tonton iklan) - sisa ' + c.gacha_ad_left : 'Gacha iklan hari ini habis';
+  }
+  function showGacha(g) {
+    var orb = $('gachaOrb'); orb.classList.remove('spin'); void orb.offsetWidth; orb.classList.add('spin'); SFX.play('magic');
+    $('gachaRes').classList.remove('show');
+    setTimeout(function () {
+      orb.textContent = initials(g.name);
+      var box = $('gachaRes'); box.className = 'gacha-res rar-' + g.rarity;
+      box.innerHTML = '<div class="muted">' + (g.isNew ? 'Khodam baru!' : 'Duplikat (punya ' + g.count + ')') + '</div><div class="gn">' + esc(g.name) + '</div><div style="font-size:13px;margin-top:4px">' + esc(g.desc) + '</div><span class="rbadge">' + esc(g.rarity_name) + '</span>' + (g.dup ? '<div class="muted" style="margin-top:6px">+' + g.dup + ' koin</div>' : '');
+      void box.offsetWidth; box.classList.add('show');
+      if (g.rarity === 'X' || g.rarity === 'E') { SFX.play('win'); confetti(orb); } else SFX.play('success');
+      if (g.dup) celebrate($('btnGacha'), g.dup);
+      mood(g.rarity === 'X' ? 'menang' : 'senang', g.isNew ? 'Wah, ' + g.name + '!' : 'Duplikat, tukar koin ya!');
+    }, 1700);
+  }
+  $('btnGacha').onclick = function () {
+    if (state.busy) return; state.busy = true; var b = this; b.disabled = true; tap();
+    api('gacha').then(function (d) { if (!d.ok) { toast(d.message); return; } showGacha(d.result.gacha); })
+      .catch(function (e) { toast(e.message || 'Koneksi bermasalah'); renderCollection(); })
+      .then(function () { state.busy = false; });
+  };
+  $('btnGachaAd').onclick = function () { watchAd('gacha', this); };
+
+  // ---------- Liga mingguan ----------
+  var rankTab = 'week', rankData = null;
+  function renderLeague() {
+    var L = state.user && state.user.league; if (!L) return;
+    $('tierIco').className = 'tico t' + L.tier_index; $('tierIco').textContent = L.tier.charAt(0);
+    $('tierName').textContent = L.tier; $('weekPts').textContent = Number(L.week_coins).toLocaleString('id-ID') + ' poin minggu ini';
+    var cur = L.tiers[L.tier_index].min, nxt = L.next_at;
+    $('tierProg').style.width = (nxt ? Math.min(100, Math.round((L.week_coins - cur) / (nxt - cur) * 100)) : 100) + '%';
+    $('tierNext').textContent = L.next_tier ? (Number(nxt - L.week_coins).toLocaleString('id-ID') + ' poin lagi ke ' + L.next_tier) : 'Tingkat tertinggi!';
+    var ms = Math.max(0, L.ends_at - Date.now()), dd = Math.floor(ms / 86400000), hh = Math.floor(ms % 86400000 / 3600000);
+    $('weekEnd').textContent = 'Liga berakhir dalam ' + (dd ? dd + ' hari ' : '') + hh + ' jam';
+    $('prizeGrid').innerHTML = L.prizes.slice(0, 5).map(function (p, i) { return '<div>#' + (i + 1) + (i === 4 ? '-10' : '') + '<b>' + Number(p).toLocaleString('id-ID') + '</b></div>'; }).join('');
+    var bd = (state.user.badges || []).slice().reverse();
+    $('badgeList').innerHTML = bd.length ? bd.slice(0, 6).map(function (b) { return '<span class="bdg">' + esc(b.label) + ' &middot; ' + esc(b.w) + '</span>'; }).join('') : '';
+  }
+  function renderRank() {
+    if (!rankData) return;
+    var list = (rankTab === 'week' ? rankData.week : rankData.top) || [];
+    $('rankList').innerHTML = list.length ? list.map(function (r) {
+      return '<div class="rank' + (r.me ? ' me' : '') + '"><div class="no">' + r.rank + '</div><img src="' + (r.photo_url ? esc(r.photo_url) : IMG.idle) + '" alt=""><div class="nm">' + esc(r.first_name) + (r.me ? ' (kamu)' : '') + '</div><div class="cn">' + r.coins.toLocaleString('id-ID') + '</div></div>';
+    }).join('') : '<div class="muted center">' + (rankTab === 'week' ? 'Belum ada poin minggu ini. Jadilah yang pertama!' : 'Belum ada pemain.') + '</div>';
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('#rankTabs button'), function (b) {
+    b.onclick = function () { tap(); rankTab = b.getAttribute('data-r'); document.querySelectorAll('#rankTabs button').forEach(function (x) { x.classList.toggle('on', x === b); }); renderRank(); };
+  });
+
+  // ---------- Mode Kilat ----------
+  var blitzCat = '', blitzTimer = null, blitzDeadline = 0;
+  function renderBlitz() {
+    var B = state.user && state.user.blitz; if (!B) return;
+    clearInterval(blitzTimer);
+    var box = $('blitzBox');
+    $('blitzInfo').textContent = B.n + ' soal \u00b7 ' + B.sec + ' detik';
+    if (B.available) {
+      var cats = Object.keys(B.cats);
+      box.innerHTML = '<p class="sub" style="margin-top:8px">Jawab cepat! Benar +' + B.coin + ' koin, sempurna +' + B.perfect + ' koin. Tidak pakai nyawa.</p><div class="cat-grid">' + cats.map(function (k) { return '<button data-c="' + k + '"' + (k === blitzCat ? ' class="on"' : '') + '>' + esc(B.cats[k]) + '</button>'; }).join('') + '</div><button class="btn" id="btnBlitzGo"' + (blitzCat ? '' : ' disabled') + '>Mulai Mode Kilat</button>';
+      Array.prototype.forEach.call(box.querySelectorAll('.cat-grid button'), function (b) { b.onclick = function () { tap(); blitzCat = b.getAttribute('data-c'); renderBlitz(); }; });
+      $('btnBlitzGo').onclick = function () {
+        if (state.busy || !blitzCat) return; state.busy = true; tap(); this.disabled = true;
+        api('blitz_start', { cat: blitzCat }).then(function (d) { if (!d.ok) toast(d.message); else SFX.play('whoosh'); })
+          .catch(function (e) { toast(e.message || 'Koneksi bermasalah'); }).then(function () { state.busy = false; });
+      };
+      return;
+    }
+    if (B.done) {
+      box.innerHTML = '<div class="center" style="padding:8px 0"><div style="font-size:34px;font-weight:900;color:var(--gold)">' + B.score + '/' + B.n + '</div><p class="sub">Mode Kilat ' + esc(B.cats[B.cat] || '') + ' hari ini selesai. Main lagi besok!</p></div>';
+      return;
+    }
+    var C = 2 * Math.PI * 23;
+    box.innerHTML = '<div class="row" style="align-items:center;margin:10px 0 6px"><div class="timer"><svg viewBox="0 0 54 54"><circle class="bgc" cx="27" cy="27" r="23"/><circle class="fgc" id="bzRing" cx="27" cy="27" r="23" stroke-dasharray="' + C + '" stroke-dashoffset="0"/></svg><span id="bzSec">' + B.sec + '</span></div><div style="flex:1"><div class="muted">' + esc(B.cats[B.cat]) + ' \u00b7 Soal ' + (B.i + 1) + '/' + B.n + ' \u00b7 Benar ' + B.score + '</div><div class="question" style="margin:4px 0 0">' + esc(B.q.q) + '</div></div></div><div id="bzOpts">' + B.q.options.map(function (o, i) { return '<button class="opt" data-i="' + i + '">' + esc(o) + '</button>'; }).join('') + '</div>';
+    blitzDeadline = Date.now() + B.left_ms;
+    var tick = function () {
+      var left = Math.max(0, blitzDeadline - Date.now());
+      var r = $('bzRing'); if (!r) { clearInterval(blitzTimer); return; }
+      r.style.strokeDashoffset = C * (1 - left / (B.sec * 1000));
+      r.style.stroke = left < 3000 ? 'var(--red)' : 'var(--cyan)';
+      $('bzSec').textContent = Math.ceil(left / 1000);
+      if (left <= 0) { clearInterval(blitzTimer); blitzAnswer(-1, null); }
+    };
+    tick(); blitzTimer = setInterval(tick, 100);
+    Array.prototype.forEach.call(box.querySelectorAll('#bzOpts .opt'), function (b) { b.onclick = function () { blitzAnswer(Number(b.getAttribute('data-i')), b); }; });
+  }
+  function blitzAnswer(choice, btn) {
+    if (state.busy) return; state.busy = true; clearInterval(blitzTimer);
+    var all = document.querySelectorAll('#bzOpts .opt');
+    Array.prototype.forEach.call(all, function (b) { b.disabled = true; });
+    var keep = state.user.blitz;
+    api('blitz_answer', { choice: choice }).then(function (d) {
+      var nb = state.user.blitz; state.user.blitz = keep;
+      if (!d.ok) { toast(d.message); state.user.blitz = nb; renderBlitz(); return; }
+      var r = d.result;
+      if (btn) btn.classList.add(r.correct ? 'correct' : 'wrong');
+      if (all[r.correctIndex]) all[r.correctIndex].classList.add('correct');
+      if (r.correct) { SFX.play('coin'); try { tg.HapticFeedback.notificationOccurred('success'); } catch (e) {} } else haptic('error');
+      if (r.done) { toast(d.message); if (r.bonus) { SFX.play('win'); confetti($('blitzCard')); } }
+      setTimeout(function () { state.user.blitz = nb; renderBlitz(); }, 700);
+    }).catch(function (e) { toast(e.message || 'Koneksi bermasalah'); state.user.blitz = keep; renderBlitz(); })
+      .then(function () { state.busy = false; });
+  }
+
+  // ---------- Kartu khodam (gambar) ----------
+  var RCOL = { B: '#9fb3d1', L: '#4fe3ff', E: '#b58cff', X: '#ffcf4a' };
+  function loadImg(src) { return new Promise(function (res) { var i = new Image(); i.crossOrigin = 'anonymous'; i.onload = function () { res(i); }; i.onerror = function () { res(null); }; i.src = src; }); }
+  function wrap(ctx, text, x, y, maxW, lh) {
+    var words = String(text).split(' '), line = '', lines = [];
+    words.forEach(function (w) { var t = line ? line + ' ' + w : w; if (ctx.measureText(t).width > maxW && line) { lines.push(line); line = w; } else line = t; });
+    if (line) lines.push(line);
+    lines.forEach(function (l, i) { ctx.fillText(l, x, y + i * lh); });
+    return lines.length;
+  }
+  function makeCard(r) {
+    var W = 1080, H = 1920, cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+    var ctx = cv.getContext('2d'), rc = RCOL[r.rarity] || RCOL.B;
+    return Promise.all([loadImg(IMG.ramal), loadImg('https://lh3.googleusercontent.com/d/1X14Il1xmGA4gz_AjJDkqGlzMrSuibMxy')]).then(function (imgs) {
+      var g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#141d48'); g.addColorStop(1, '#070b1d'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+      if (imgs[1]) { ctx.globalAlpha = .35; ctx.drawImage(imgs[1], 0, H * 0.25, W, W * 1.75); ctx.globalAlpha = 1; var g2 = ctx.createLinearGradient(0, 0, 0, H); g2.addColorStop(0, 'rgba(7,11,29,.95)'); g2.addColorStop(.45, 'rgba(7,11,29,.35)'); g2.addColorStop(1, 'rgba(7,11,29,.98)'); ctx.fillStyle = g2; ctx.fillRect(0, 0, W, H); }
+      for (var i = 0; i < 70; i++) { ctx.fillStyle = i % 3 ? 'rgba(79,227,255,.5)' : 'rgba(155,107,255,.6)'; ctx.beginPath(); ctx.arc(Math.random() * W, Math.random() * H, Math.random() * 3 + 1, 0, 7); ctx.fill(); }
+      ctx.strokeStyle = rc; ctx.lineWidth = 6; ctx.shadowColor = rc; ctx.shadowBlur = 40;
+      var x = 70, y = 140, w = W - 140, h = H - 300, rr = 60;
+      ctx.beginPath(); ctx.moveTo(x + rr, y); ctx.arcTo(x + w, y, x + w, y + h, rr); ctx.arcTo(x + w, y + h, x, y + h, rr); ctx.arcTo(x, y + h, x, y, rr); ctx.arcTo(x, y, x + w, y, rr); ctx.closePath(); ctx.stroke(); ctx.shadowBlur = 0;
+      ctx.textAlign = 'center'; ctx.fillStyle = '#93a3c7'; ctx.font = '600 44px system-ui, sans-serif'; ctx.fillText('KHODAM MILIK', W / 2, 270);
+      ctx.fillStyle = '#ffffff'; ctx.font = '900 84px system-ui, sans-serif'; wrap(ctx, String(r.name).toUpperCase(), W / 2, 370, W - 240, 90);
+      var glow = ctx.createRadialGradient(W / 2, 830, 40, W / 2, 830, 380); glow.addColorStop(0, rc + 'aa'); glow.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = glow; ctx.fillRect(0, 430, W, 800);
+      if (imgs[0]) { ctx.save(); ctx.globalCompositeOperation = 'lighten'; ctx.beginPath(); ctx.arc(W / 2, 830, 330, 0, 7); ctx.clip(); ctx.drawImage(imgs[0], W / 2 - 360, 470, 720, 720); ctx.restore(); }
+      ctx.fillStyle = rc; ctx.font = '900 96px system-ui, sans-serif'; ctx.shadowColor = rc; ctx.shadowBlur = 30; var n = wrap(ctx, r.khodam, W / 2, 1290, W - 220, 104); ctx.shadowBlur = 0;
+      var by = 1290 + n * 104 - 40;
+      ctx.font = '800 40px system-ui, sans-serif'; var label = (r.rarity_name || 'Biasa').toUpperCase(), lw = ctx.measureText(label).width + 70;
+      ctx.fillStyle = rc; ctx.beginPath(); ctx.roundRect ? ctx.roundRect(W / 2 - lw / 2, by, lw, 70, 35) : ctx.rect(W / 2 - lw / 2, by, lw, 70); ctx.fill();
+      ctx.fillStyle = '#06102a'; ctx.fillText(label, W / 2, by + 50);
+      ctx.fillStyle = '#eaf2ff'; ctx.font = '500 44px system-ui, sans-serif'; var dl = wrap(ctx, r.desc, W / 2, by + 150, W - 260, 56);
+      var py = by + 170 + dl * 56;
+      ctx.fillStyle = 'rgba(255,255,255,.12)'; ctx.fillRect(180, py, W - 360, 26);
+      var pg = ctx.createLinearGradient(180, 0, W - 180, 0); pg.addColorStop(0, '#4fe3ff'); pg.addColorStop(1, '#9b6bff'); ctx.fillStyle = pg; ctx.fillRect(180, py, (W - 360) * r.power / 100, 26);
+      ctx.fillStyle = '#93a3c7'; ctx.font = '600 40px system-ui, sans-serif'; ctx.fillText('Kekuatan ' + r.power + '%', W / 2, py + 90);
+      ctx.fillStyle = '#ffffff'; ctx.font = '800 46px system-ui, sans-serif'; ctx.fillText('Cek khodammu di Telegram', W / 2, H - 300);
+      ctx.fillStyle = '#4fe3ff'; ctx.font = '700 44px system-ui, sans-serif'; ctx.fillText('t.me/' + C.BOT_USERNAME + '/' + C.APP_SHORT_NAME, W / 2, H - 235);
+      ctx.fillStyle = '#93a3c7'; ctx.font = '500 32px system-ui, sans-serif'; ctx.fillText('Hanya hiburan ya!', W / 2, H - 90);
+      return cv;
+    });
+  }
+  var cardBlob = null;
+  function openCard(open) { if (open) SFX.play('whoosh'); $('cardBg').classList.toggle('show', open); $('cardSheet').classList.toggle('show', open); }
+  $('btnCardKhodam').onclick = function () {
+    var r = state.lastKhodam; if (!r) return; tap(); var b = this; b.disabled = true; b.textContent = 'Membuat...';
+    makeCard(r).then(function (cv) {
+      var url = cv.toDataURL('image/png'); $('cardImg').src = url;
+      cv.toBlob(function (bl) { cardBlob = bl; }, 'image/png');
+      openCard(true); SFX.play('success');
+    }).catch(function () { toast('Gagal membuat kartu'); }).then(function () { b.disabled = false; b.textContent = 'Buat Kartu'; });
+  };
+  $('btnCardShare').onclick = function () {
+    var r = state.lastKhodam; tap();
+    var text = 'Khodam ' + r.name + ' adalah ' + r.khodam + ' (' + r.rarity_name + ', ' + r.power + '%)! Cek khodammu juga: ' + refLink();
+    try {
+      if (cardBlob && navigator.canShare) {
+        var file = new File([cardBlob], 'khodam-' + Date.now() + '.png', { type: 'image/png' });
+        if (navigator.canShare({ files: [file] })) { navigator.share({ files: [file], text: text }).catch(function () {}); return; }
+      }
+    } catch (e) {}
+    share('Khodam ' + r.name + ' adalah ' + r.khodam + ' (' + r.rarity_name + ', ' + r.power + '%)! Cek khodammu juga di sini:');
+  };
+  $('btnCardSave').onclick = function () {
+    tap();
+    try { var a = document.createElement('a'); a.href = $('cardImg').src; a.download = 'kartu-khodam.png'; document.body.appendChild(a); a.click(); a.remove(); toast('Kalau tidak tersimpan, tekan lama gambar lalu pilih Simpan'); }
+    catch (e) { toast('Tekan lama gambar lalu pilih Simpan'); }
+  };
+  $('btnCardClose').onclick = function () { openCard(false); };
+  $('cardBg').onclick = function () { openCard(false); };
 
   // ---------- Misi harian ----------
   function renderMissions() {
@@ -826,7 +1229,7 @@
   }
   function openSheet(open) { if (open) SFX.play('whoosh'); $('sheetBg').classList.toggle('show', open); $('wdSheet').classList.toggle('show', open); }
   // ---------- Aturan & Syarat ----------
-  var RULES_KEY = 'khodi_rules_v1';
+  var RULES_KEY = 'khodi_rules_v2'; // naikkan versi bila aturan berubah agar pemain diminta setuju ulang
   function rulesAccepted() { try { return localStorage.getItem(RULES_KEY) === '1'; } catch (e) { return false; } }
   var rulesThen = null;
   function openRules(open, then) {
@@ -937,10 +1340,11 @@
     show({ type: 'end', ymid: state.user.id + '-' + purpose + '-' + Date.now(), requestVar: purpose }).then(function () {
       return api('ad_reward', { purpose: purpose }).then(function (d) {
         toast(d.message);
+        if (d.ok && purpose === 'gacha') { showGacha(d.result.gacha); return; }
         if (d.ok) { haptic('success'); if (purpose === 'coins') celebrate(btn, (d.result && d.result.coins || 0) + (d.result && d.result.ref_bonus || 0)); else confetti(btn); mood('senang', (d.result && d.result.ref_bonus) ? 'Bonus undangan cair! +200 koin' : (purpose === 'life' ? 'Nyawa bertambah!' : 'Koin bertambah!')); }
       });
     }).catch(function () { toast('Iklan dilewati atau gagal dimuat.'); })
-      .then(function () { state.busy = false; state.lastInterstitial = Date.now(); btn.textContent = label; btn.disabled = false; renderQuiz(); if (state.user) $('btnAdCoins').disabled = state.user.ads_left <= 0; });
+      .then(function () { state.busy = false; state.lastInterstitial = Date.now(); btn.textContent = label; btn.disabled = false; renderQuiz(); renderCollection(); if (state.user) $('btnAdCoins').disabled = state.user.ads_left <= 0; });
   }
   // In-App Interstitial otomatis: maks 3 iklan per 1 jam, jeda minimal 4 menit, iklan pertama setelah 2 menit
   var inAppStarted = false;
@@ -965,6 +1369,7 @@
         $('kFor').textContent = 'Khodam milik ' + r.name + ':';
         $('kName').textContent = r.khodam; $('kDesc').textContent = r.desc;
         $('kPower').style.width = '0'; $('kPowerTxt').textContent = 'Kekuatan: ' + r.power + '%';
+        $('kRar').innerHTML = r.rarity ? '<span class="rbadge rar-' + esc(r.rarity) + '">' + esc(r.rarity_name) + '</span>' : '';
         $('khodamResult').classList.add('show');
         setTimeout(function () { $('kPower').style.width = r.power + '%'; }, 60);
         SFX.play('win'); try { tg.HapticFeedback.notificationOccurred('success'); } catch (er) {}
@@ -982,13 +1387,10 @@
     share('Khodam ' + r.name + ' adalah ' + r.khodam + ' (' + r.power + '%)! Cek khodammu juga di sini:');
   };
 
-  // ---------- Ranking ----------
+  // ---------- Ranking (lama, diganti renderRank) ----------
   function loadRank() {
     api('leaderboard').then(function (d) {
-      var list = (d.top || []).map(function (r) {
-        return '<div class="rank' + (r.me ? ' me' : '') + '"><div class="no">' + r.rank + '</div><img src="' + (r.photo_url ? esc(r.photo_url) : IMG.idle) + '" alt=""><div class="nm">' + esc(r.first_name) + (r.me ? ' (kamu)' : '') + '</div><div class="cn">' + r.coins.toLocaleString('id-ID') + '</div></div>';
-      }).join('');
-      $('rankList').innerHTML = list || '<div class="muted center">Belum ada pemain.</div>';
+      rankData = d; renderRank();
     }).catch(function (e) { $('rankList').innerHTML = '<div class="muted center">' + esc(e.message || 'Gagal memuat') + '</div>'; });
   }
 
@@ -997,7 +1399,6 @@
     var url = 'https://t.me/share/url?url=' + encodeURIComponent(refLink()) + '&text=' + encodeURIComponent(text);
     if (tg && tg.openTelegramLink) tg.openTelegramLink(url); else window.open(url, '_blank');
   }
-  $('btnRankInvite').onclick = function () { share('Yuk cek khodam dan main kuis harian bareng Khodi, dapat koin gratis!'); };
   $('btnShare').onclick = function () { share('Yuk cek khodam dan main kuis harian bareng Khodi, dapat koin gratis!'); };
   $('btnCopy').onclick = function () {
     var t = refLink();
