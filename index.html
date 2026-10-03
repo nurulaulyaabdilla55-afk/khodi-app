@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>Khodi - Cek Khodam & Kuis Harian</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<!-- ====== KONFIGURASI: ganti 2 nilai ini ====== -->
+<script>
+  window.KHODI_CONFIG = {
+    API_URL: 'https://novaria666.app.n8n.cloud/webhook/khodi-api',
+    MONETAG_ZONE: 'GANTI_DENGAN_MAIN_ZONE_ID_MONETAG',
+    MONETAG_SDK_URL: 'GANTI_DENGAN_URL_SDK_DARI_DASHBOARD_MONETAG',
+    BOT_USERNAME: 'Khodi_app_mini_bot',
+    APP_SHORT_NAME: 'app'
+  };
+  (function () {
+    var z = window.KHODI_CONFIG.MONETAG_ZONE;
+    var src = window.KHODI_CONFIG.MONETAG_SDK_URL;
+    if (/^\d+$/.test(z) && /^(https?:)?\/\//.test(src)) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.setAttribute('data-zone', z);
+      s.setAttribute('data-sdk', 'show_' + z);
+      document.head.appendChild(s);
+    }
+  })();
+</script>
+<style>
+  :root{
+    --bg:#0B1026; --bg2:#121a3d; --glass:rgba(255,255,255,.07); --stroke:rgba(140,200,255,.18);
+    --cyan:#4fe3ff; --purple:#9b6bff; --gold:#ffcf4a; --text:#eaf2ff; --muted:#93a3c7; --red:#ff5d7a; --green:#3ef0a1;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow:hidden}
+  body{
+    background:
+      linear-gradient(180deg,rgba(11,16,38,.25),rgba(11,16,38,.85) 70%,var(--bg)),
+      url('https://lh3.googleusercontent.com/d/1X14Il1xmGA4gz_AjJDkqGlzMrSuibMxy') center/cover no-repeat fixed, var(--bg);
+  }
+  .app{position:relative;height:100%;display:flex;flex-direction:column;padding-top:var(--tg-content-safe-area-inset-top,0px)}
+  /* Header */
+  .header{display:flex;align-items:center;gap:10px;padding:12px 14px}
+  .avatar{width:44px;height:44px;border-radius:50%;border:2px solid var(--cyan);box-shadow:0 0 14px rgba(79,227,255,.5);object-fit:cover;background:var(--bg2)}
+  .who{flex:1;min-width:0}
+  .who b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lvl{font-size:11px;color:var(--cyan);background:rgba(79,227,255,.12);border:1px solid var(--stroke);padding:2px 8px;border-radius:20px;display:inline-block;margin-top:3px}
+  .pill{display:flex;align-items:center;gap:6px;background:var(--glass);border:1px solid var(--stroke);padding:6px 10px;border-radius:20px;font-weight:700;font-size:14px;backdrop-filter:blur(10px)}
+  .pill img{width:22px;height:22px;border-radius:50%;object-fit:cover}
+  /* Pages */
+  .pages{flex:1;overflow-y:auto;padding:4px 14px 110px;scrollbar-width:none}
+  .pages::-webkit-scrollbar{display:none}
+  .page{display:none;animation:fadeUp .35s ease}
+  .page.active{display:block}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  .card{background:var(--glass);border:1px solid var(--stroke);border-radius:20px;padding:16px;margin-bottom:14px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 8px 30px rgba(0,0,0,.25)}
+  h2{margin:0 0 10px;font-size:18px}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 12px}
+  /* Hero */
+  .hero{text-align:center;padding:6px 0 0}
+  .mascot-wrap{position:relative;width:210px;height:210px;margin:0 auto}
+  .mascot-wrap::before{content:"";position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle,rgba(79,227,255,.55),rgba(155,107,255,.25) 55%,transparent 70%);filter:blur(18px);animation:pulse 3s ease-in-out infinite}
+  .mascot{position:relative;width:100%;height:100%;object-fit:cover;border-radius:50%;
+    -webkit-mask-image:radial-gradient(circle,#000 58%,transparent 71%);mask-image:radial-gradient(circle,#000 58%,transparent 71%);
+    animation:float 3.2s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-12px) rotate(1deg)}}
+  @keyframes pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+  .bubble{display:inline-block;background:rgba(18,26,61,.85);border:1px solid var(--stroke);padding:8px 14px;border-radius:16px;font-size:13px;margin-top:4px}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+  .stat{background:var(--glass);border:1px solid var(--stroke);border-radius:16px;padding:10px 6px;text-align:center}
+  .stat img{width:34px;height:34px;object-fit:cover;border-radius:50%;-webkit-mask-image:radial-gradient(circle,#000 55%,transparent 72%);mask-image:radial-gradient(circle,#000 55%,transparent 72%)}
+  .stat b{display:block;font-size:18px;margin-top:2px}
+  .stat span{font-size:11px;color:var(--muted)}
+  /* Buttons */
+  .btn{width:100%;border:0;border-radius:16px;padding:14px;font-size:15px;font-weight:800;color:#06102a;cursor:pointer;
+    background:linear-gradient(135deg,var(--cyan),#7aa8ff 50%,var(--purple));box-shadow:0 6px 20px rgba(79,227,255,.35);transition:transform .12s,opacity .2s}
+  .btn:active{transform:scale(.97)}
+  .btn[disabled]{opacity:.45;box-shadow:none}
+  .btn.gold{background:linear-gradient(135deg,#ffe27a,var(--gold) 50%,#ff9d3b)}
+  .btn.ghost{background:var(--glass);color:var(--text);border:1px solid var(--stroke);box-shadow:none}
+  .row{display:flex;gap:10px}
+  .row .btn{flex:1}
+  /* Daily */
+  .daily{display:flex;align-items:center;gap:12px}
+  .daily img{width:74px;height:74px;object-fit:cover;border-radius:18px;-webkit-mask-image:radial-gradient(circle,#000 55%,transparent 72%);mask-image:radial-gradient(circle,#000 55%,transparent 72%);animation:float 2.6s ease-in-out infinite}
+  .daily .info{flex:1}
+  .days{display:flex;gap:5px;margin-top:8px}
+  .days i{flex:1;height:6px;border-radius:4px;background:rgba(255,255,255,.12)}
+  .days i.on{background:linear-gradient(90deg,var(--gold),#ff9d3b);box-shadow:0 0 8px rgba(255,207,74,.6)}
+  /* Quiz */
+  .q-progress{display:flex;gap:6px;margin-bottom:12px}
+  .q-progress i{flex:1;height:6px;border-radius:4px;background:rgba(255,255,255,.12)}
+  .q-progress i.ok{background:var(--green)}
+  .q-progress i.bad{background:var(--red)}
+  .q-progress i.cur{background:var(--cyan)}
+  .question{font-size:17px;font-weight:700;margin:6px 0 14px;line-height:1.35}
+  .opt{display:block;width:100%;text-align:left;background:var(--glass);border:1px solid var(--stroke);color:var(--text);padding:13px 14px;border-radius:14px;margin-bottom:9px;font-size:15px;cursor:pointer;transition:all .15s}
+  .opt:active{transform:scale(.98)}
+  .opt.correct{background:rgba(62,240,161,.18);border-color:var(--green)}
+  .opt.wrong{background:rgba(255,93,122,.18);border-color:var(--red);animation:shake .35s}
+  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .lives{display:flex;align-items:center;gap:4px}
+  .lives img{width:22px;height:22px;border-radius:50%;object-fit:cover}
+  /* Khodam */
+  .input{width:100%;background:rgba(0,0,0,.25);border:1px solid var(--stroke);color:var(--text);padding:14px;border-radius:14px;font-size:15px;outline:none;margin-bottom:10px}
+  .input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(79,227,255,.15)}
+  .result{text-align:center;display:none}
+  .result.show{display:block;animation:pop .5s cubic-bezier(.2,1.4,.4,1)}
+  @keyframes pop{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:none}}
+  .result .name{font-size:24px;font-weight:900;background:linear-gradient(90deg,var(--cyan),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent;margin:8px 0 4px}
+  .power{height:10px;border-radius:6px;background:rgba(255,255,255,.12);overflow:hidden;margin:10px 0}
+  .power i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--purple));transition:width 1.2s ease}
+  /* Ranking */
+  .rank{display:flex;align-items:center;gap:10px;padding:10px;border-radius:14px;margin-bottom:8px;background:rgba(255,255,255,.04);border:1px solid transparent}
+  .rank.me{border-color:var(--cyan);background:rgba(79,227,255,.08)}
+  .rank .no{width:28px;text-align:center;font-weight:900;color:var(--muted)}
+  .rank:nth-child(1) .no{color:var(--gold)} .rank:nth-child(2) .no{color:#cfd8e8} .rank:nth-child(3) .no{color:#e0995e}
+  .rank img{width:36px;height:36px;border-radius:50%;object-fit:cover;background:var(--bg2)}
+  .rank .nm{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rank .cn{font-weight:800;color:var(--gold)}
+  /* Nav */
+  .nav{position:fixed;left:10px;right:10px;bottom:calc(10px + var(--tg-safe-area-inset-bottom,0px));display:flex;justify-content:space-around;
+    background:rgba(18,26,61,.82);border:1px solid var(--stroke);border-radius:22px;padding:8px 4px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);z-index:5}
+  .nav button{flex:1;background:none;border:0;color:var(--muted);font-size:10.5px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0;border-radius:14px;cursor:pointer;transition:all .2s}
+  .nav button svg{width:22px;height:22px}
+  .nav button.active{color:var(--cyan);background:rgba(79,227,255,.1)}
+  /* Toast & loader */
+  .toast{position:fixed;left:50%;top:calc(16px + var(--tg-content-safe-area-inset-top,0px));transform:translate(-50%,-120px);background:rgba(18,26,61,.95);border:1px solid var(--stroke);padding:10px 16px;border-radius:14px;font-size:14px;z-index:20;transition:transform .35s cubic-bezier(.2,1.2,.4,1);max-width:90%;text-align:center}
+  .toast.show{transform:translate(-50%,0)}
+  .loader{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:30;transition:opacity .4s}
+  .loader img{width:150px;height:150px;border-radius:50%;object-fit:cover;-webkit-mask-image:radial-gradient(circle,#000 58%,transparent 71%);mask-image:radial-gradient(circle,#000 58%,transparent 71%);animation:float 2s ease-in-out infinite}
+  .loader.hide{opacity:0;pointer-events:none}
+  .coin-fly{position:fixed;width:28px;height:28px;border-radius:50%;z-index:25;pointer-events:none;object-fit:cover;transition:all .8s cubic-bezier(.5,-.3,.7,1)}
+  .center{text-align:center}
+  .muted{color:var(--muted);font-size:13px}
+  .reflink{font-size:12px;word-break:break-all;background:rgba(0,0,0,.25);border:1px dashed var(--stroke);padding:10px;border-radius:12px;margin:10px 0}
+</style>
+</head>
+<body>
+<div class="loader" id="loader">
+  <img src="https://lh3.googleusercontent.com/d/1tZhMARr1POvJTc6MX9-ErWVXzJ1CeJ5b" alt="Khodi" />
+  <div class="muted" id="loaderText">Memanggil Khodi...</div>
+</div>
+
+<div class="app">
+  <div class="header">
+    <img class="avatar" id="avatar" src="https://lh3.googleusercontent.com/d/1tZhMARr1POvJTc6MX9-ErWVXzJ1CeJ5b" alt="Avatar" />
+    <div class="who"><b id="uname">Pemain</b><span class="lvl" id="ulevel">Level 1</span></div>
+    <div class="pill"><img src="https://lh3.googleusercontent.com/d/12lcT6hzNWK4dDr4LvyzqU2Xy-g3Yhkmc" alt="Nyawa" /><span id="hLives">0</span></div>
+    <div class="pill"><img src="https://lh3.googleusercontent.com/d/19y69IDvF8YmJgIRNjt6pyvHPPt9mDJMe" alt="Koin" id="coinIcon" /><span id="hCoins">0</span></div>
+  </div>
+
+  <div class="pages">
+    <!-- HOME -->
+    <section class="page active" id="p-home">
+      <div class="hero">
+        <div class="mascot-wrap"><img class="mascot" id="mascot" src="https://lh3.googleusercontent.com/d/1tZhMARr1POvJTc6MX9-ErWVXzJ1CeJ5b" alt="Khodi" /></div>
+        <div class="bubble" id="bubble">Halo! Aku Khodi, penjaga khodammu.</div>
+      </div>
+      <div class="stats">
+        <div class="stat"><img src="https://lh3.googleusercontent.com/d/19y69IDvF8YmJgIRNjt6pyvHPPt9mDJMe" alt="" /><b id="sCoins">0</b><span>Koin</span></div>
+        <div class="stat"><img src="https://lh3.googleusercontent.com/d/1BAlVTmDEgtzXTeYyihy9LkLkq3dPjlXi" alt="" /><b id="sStreak">0</b><span>Streak</span></div>
+        <div class="stat"><img src="https://lh3.googleusercontent.com/d/12lcT6hzNWK4dDr4LvyzqU2Xy-g3Yhkmc" alt="" /><b id="sLives">0</b><span>Nyawa</span></div>
+      </div>
+      <div class="card">
+        <div class="daily">
+          <img src="https://lh3.googleusercontent.com/d/16M-lmQQbZXlx3aa0smJyX6GuUwOCiHPL" alt="Hadiah" />
+          <div class="info">
+            <h2 style="margin:0">Hadiah Harian</h2>
+            <div class="muted" id="dailyText">Ambil koin gratis tiap hari</div>
+            <div class="days" id="days"></div>
+          </div>
+        </div>
+        <div style="height:12px"></div>
+        <button class="btn gold" id="btnDaily">Klaim Hadiah</button>
+      </div>
+      <div class="card">
+        <h2>Bonus Koin</h2>
+        <p class="sub">Tonton iklan singkat, dapat +100 koin. Sisa hari ini: <b id="adsLeft">0</b></p>
+        <button class="btn" id="btnAdCoins">Tonton & Dapat 100 Koin</button>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="page" id="p-quiz">
+      <div class="card">
+        <div class="row" style="align-items:center;justify-content:space-between;margin-bottom:10px">
+          <h2 style="margin:0">Kuis Harian</h2>
+          <div class="lives" id="qLives"></div>
+        </div>
+        <div class="q-progress" id="qProgress"></div>
+        <div id="quizBox"></div>
+      </div>
+    </section>
+
+    <!-- KHODAM -->
+    <section class="page" id="p-khodam">
+      <div class="card center">
+        <div class="mascot-wrap" style="width:170px;height:170px"><img class="mascot" src="https://lh3.googleusercontent.com/d/1-6KJjNivLX20QXndrj8KPumTzsnHQewR" alt="Ramal" /></div>
+        <h2>Cek Khodam</h2>
+        <p class="sub">Ketik nama (kamu atau temanmu). Hanya hiburan ya!</p>
+        <input class="input" id="khodamName" maxlength="40" placeholder="Masukkan nama..." />
+        <button class="btn" id="btnKhodam">Terawang Sekarang</button>
+        <div class="result" id="khodamResult">
+          <div class="muted" style="margin-top:16px" id="kFor"></div>
+          <div class="name" id="kName"></div>
+          <div id="kDesc"></div>
+          <div class="power"><i id="kPower"></i></div>
+          <div class="muted" id="kPowerTxt"></div>
+          <div style="height:12px"></div>
+          <button class="btn ghost" id="btnShareKhodam">Bagikan ke Teman</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RANK -->
+    <section class="page" id="p-rank">
+      <div class="card">
+        <h2>Top 10 Pemain</h2>
+        <p class="sub">Kumpulkan koin sebanyak-banyaknya!</p>
+        <div id="rankList"><div class="muted center">Memuat...</div></div>
+      </div>
+    </section>
+
+    <!-- FRIENDS -->
+    <section class="page" id="p-friends">
+      <div class="card center">
+        <div class="mascot-wrap" style="width:160px;height:160px"><img class="mascot" src="https://lh3.googleusercontent.com/d/1mVjnHnTSxr9yB6UbexvvDNfnCi1CpK_H" alt="Senang" /></div>
+        <h2>Undang Teman</h2>
+        <p class="sub">Kamu dapat <b>500 koin</b>, temanmu dapat <b>200 koin</b> untuk setiap undangan.</p>
+        <div class="stat" style="margin:0 auto 10px;max-width:160px"><b id="refCount">0</b><span>Teman diundang</span></div>
+        <div class="reflink" id="refLink">-</div>
+        <div class="row">
+          <button class="btn" id="btnShare">Bagikan</button>
+          <button class="btn ghost" id="btnCopy">Salin</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <nav class="nav" id="nav">
+    <button data-p="home" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Beranda</button>
+    <button data-p="quiz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01"/></svg>Kuis</button>
+    <button data-p="khodam"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="11" r="7"/><path d="M8 21h8M12 7v4l2 2"/></svg>Khodam</button>
+    <button data-p="rank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21V11M12 21V5M16 21v-7"/></svg>Ranking</button>
+    <button data-p="friends"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M17 4a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4-6"/></svg>Teman</button>
+  </nav>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  var C = window.KHODI_CONFIG;
+  var tg = window.Telegram && window.Telegram.WebApp;
+  var IMG = {
+    idle: 'https://lh3.googleusercontent.com/d/1tZhMARr1POvJTc6MX9-ErWVXzJ1CeJ5b',
+    senang: 'https://lh3.googleusercontent.com/d/1mVjnHnTSxr9yB6UbexvvDNfnCi1CpK_H',
+    kaget: 'https://lh3.googleusercontent.com/d/1bWoXpGm0s3OvevtCPtLj458lOHTPYwqm',
+    menang: 'https://lh3.googleusercontent.com/d/1MBUMQuVVWWH0So5wOFklVGLlK0p0JMKZ',
+    sedih: 'https://lh3.googleusercontent.com/d/1FTLj6kJs-WD-V51wA2hWamCzZ78VKGTX',
+    koin: 'https://lh3.googleusercontent.com/d/19y69IDvF8YmJgIRNjt6pyvHPPt9mDJMe',
+    nyawa: 'https://lh3.googleusercontent.com/d/12lcT6hzNWK4dDr4LvyzqU2Xy-g3Yhkmc'
+  };
+  var state = { user: null, quiz: null, qIndex: 0, busy: false, lastInterstitial: Date.now() };
+  var $ = function (id) { return document.getElementById(id); };
+
+  if (tg) {
+    tg.ready(); tg.expand();
+    try { tg.setHeaderColor('#0B1026'); tg.setBackgroundColor('#0B1026'); if (tg.setBottomBarColor) tg.setBottomBarColor('#0B1026'); } catch (e) {}
+    try { if (tg.disableVerticalSwipes) tg.disableVerticalSwipes(); } catch (e) {}
+  }
+  Object.keys(IMG).forEach(function (k) { var i = new Image(); i.src = IMG[k]; });
+
+  function haptic(t) { try { tg.HapticFeedback.notificationOccurred(t); } catch (e) {} }
+  function tap() { try { tg.HapticFeedback.impactOccurred('light'); } catch (e) {} }
+  function toast(msg) { var t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(function () { t.classList.remove('show'); }, 2600); }
+  function mood(name, text) {
+    var m = $('mascot'); m.style.opacity = 0;
+    setTimeout(function () { m.src = IMG[name] || IMG.idle; m.style.opacity = 1; }, 150);
+    if (text) $('bubble').textContent = text;
+    clearTimeout(mood._h); mood._h = setTimeout(function () { m.src = IMG.idle; }, 4000);
+  }
+  function animateNum(el, to) {
+    var from = Number(el.textContent.replace(/\D/g, '')) || 0; if (from === to) return;
+    var start = performance.now();
+    function step(t) { var p = Math.min(1, (t - start) / 600); el.textContent = Math.round(from + (to - from) * p).toLocaleString('id-ID'); if (p < 1) requestAnimationFrame(step); }
+    requestAnimationFrame(step);
+  }
+  function coinBurst(fromEl) {
+    var r = fromEl.getBoundingClientRect(); var target = $('coinIcon').getBoundingClientRect();
+    for (var i = 0; i < 6; i++) (function (i) {
+      var c = document.createElement('img'); c.src = IMG.koin; c.className = 'coin-fly';
+      c.style.left = (r.left + r.width / 2 + (Math.random() * 60 - 30)) + 'px'; c.style.top = (r.top + r.height / 2) + 'px';
+      document.body.appendChild(c);
+      setTimeout(function () { c.style.left = target.left + 'px'; c.style.top = target.top + 'px'; c.style.opacity = .3; c.style.transform = 'scale(.6)'; }, 30 + i * 70);
+      setTimeout(function () { c.remove(); }, 1000 + i * 70);
+    })(i);
+  }
+
+  function api(action, payload) {
+    return fetch(C.API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ initData: tg ? tg.initData : '', action: action, payload: payload || {} })
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      if (d && d.error === 'unauthorized') throw new Error('Buka aplikasi ini dari dalam Telegram ya.');
+      if (d && d.user) render(d);
+      return d;
+    });
+  }
+
+  function render(d) {
+    var u = d.user; state.user = u; if (d.quiz) state.quiz = d.quiz;
+    $('uname').textContent = u.first_name || 'Pemain';
+    $('ulevel').textContent = 'Level ' + u.level;
+    if (u.photo_url) $('avatar').src = u.photo_url;
+    animateNum($('hCoins'), u.coins); animateNum($('sCoins'), u.coins);
+    $('hLives').textContent = u.lives; $('sLives').textContent = u.lives; $('sStreak').textContent = u.streak;
+    $('adsLeft').textContent = u.ads_left;
+    $('btnAdCoins').disabled = u.ads_left <= 0;
+    var days = ''; var s = u.streak % 7 || (u.streak ? 7 : 0);
+    for (var i = 1; i <= 7; i++) days += '<i class="' + (i <= s ? 'on' : '') + '"></i>';
+    $('days').innerHTML = days;
+    $('btnDaily').disabled = u.daily_claimed;
+    $('btnDaily').textContent = u.daily_claimed ? 'Sudah diklaim, kembali besok' : 'Klaim Hadiah';
+    $('dailyText').textContent = u.daily_claimed ? 'Streak ' + u.streak + ' hari. Mantap!' : 'Hadiah naik tiap hari streak (maks 350)';
+    $('refCount').textContent = u.referrals || 0;
+    $('refLink').textContent = refLink();
+    renderQuiz();
+  }
+
+  function refLink() {
+    if (!state.user) return '-';
+    return 'https://t.me/' + C.BOT_USERNAME + '/' + C.APP_SHORT_NAME + '?startapp=ref_' + state.user.id;
+  }
+
+  // ---------- Quiz ----------
+  function renderQuiz() {
+    var q = state.quiz; if (!q || !state.user) return;
+    var lives = ''; for (var i = 0; i < Math.min(state.user.lives, 10); i++) lives += '<img src="' + IMG.nyawa + '" alt="">';
+    $('qLives').innerHTML = lives || '<span class="muted">0 nyawa</span>';
+    var prog = '';
+    var next = -1;
+    q.questions.forEach(function (it, idx) {
+      var done = q.answered.indexOf(it.id) >= 0;
+      if (!done && next < 0) next = idx;
+      prog += '<i class="' + (done ? 'ok' : (idx === next ? 'cur' : '')) + '"></i>';
+    });
+    $('qProgress').innerHTML = prog;
+    var box = $('quizBox');
+    if (next < 0) {
+      box.innerHTML = '<div class="center"><img src="' + IMG.menang + '" style="width:140px;border-radius:50%;-webkit-mask-image:radial-gradient(circle,#000 58%,transparent 71%);mask-image:radial-gradient(circle,#000 58%,transparent 71%)"><h2>Kuis hari ini selesai!</h2><p class="sub">Benar ' + q.correct + ' dari ' + q.questions.length + '. Soal baru besok.</p></div>';
+      return;
+    }
+    if (state.user.lives <= 0) {
+      box.innerHTML = '<div class="center"><img src="' + IMG.sedih + '" style="width:140px;border-radius:50%;-webkit-mask-image:radial-gradient(circle,#000 58%,transparent 71%);mask-image:radial-gradient(circle,#000 58%,transparent 71%)"><h2>Nyawa habis</h2><p class="sub">Tonton iklan singkat untuk +1 nyawa.</p><button class="btn" id="btnAdLife">Tambah Nyawa</button></div>';
+      $('btnAdLife').onclick = function () { watchAd('life', this); };
+      return;
+    }
+    var cur = q.questions[next];
+    var html = '<div class="muted">Soal ' + (next + 1) + ' dari ' + q.questions.length + '</div><div class="question">' + esc(cur.q) + '</div>';
+    cur.options.forEach(function (o, i) { html += '<button class="opt" data-i="' + i + '">' + esc(o) + '</button>'; });
+    box.innerHTML = html;
+    Array.prototype.forEach.call(box.querySelectorAll('.opt'), function (b) {
+      b.onclick = function () { answer(cur.id, Number(b.getAttribute('data-i')), b); };
+    });
+  }
+  function answer(qid, choice, btn) {
+    if (state.busy) return; state.busy = true; tap();
+    var all = document.querySelectorAll('#quizBox .opt');
+    Array.prototype.forEach.call(all, function (b) { b.disabled = true; });
+    var oldState = state.quiz; var keep = state.quiz;
+    api('quiz_answer', { qid: qid, choice: choice }).then(function (d) {
+      state.quiz = keep; // tahan tampilan sebentar
+      if (!d.ok) { toast(d.message); state.quiz = d.quiz; renderQuiz(); return; }
+      if (d.result.correct) { btn.classList.add('correct'); haptic('success'); coinBurst(btn); mood('senang', 'Benar! Kamu pintar!'); }
+      else { btn.classList.add('wrong'); all[d.result.correctIndex].classList.add('correct'); haptic('error'); mood('kaget', 'Yah, salah. Semangat!'); }
+      toast(d.message);
+      setTimeout(function () { state.quiz = d.quiz; renderQuiz(); maybeInterstitial(); }, 1300);
+    }).catch(function (e) { toast(e.message || 'Koneksi bermasalah'); state.quiz = oldState; renderQuiz(); })
+      .then(function () { state.busy = false; });
+  }
+
+  // ---------- Ads (Monetag) ----------
+  function adFn() { var z = C.MONETAG_ZONE; return (/^\d+$/.test(z) && typeof window['show_' + z] === 'function') ? window['show_' + z] : null; }
+  function watchAd(purpose, btn) {
+    if (state.busy) return;
+    var show = adFn();
+    if (!show) { toast('Iklan belum siap, coba lagi sebentar.'); return; }
+    state.busy = true; btn.disabled = true; var label = btn.textContent; btn.textContent = 'Memuat iklan...';
+    show({ type: 'end', ymid: state.user.id + '-' + purpose + '-' + Date.now(), requestVar: purpose }).then(function () {
+      return api('ad_reward', { purpose: purpose }).then(function (d) {
+        toast(d.message);
+        if (d.ok) { haptic('success'); if (purpose === 'coins') coinBurst(btn); mood('menang', purpose === 'life' ? 'Nyawa bertambah!' : 'Koin bertambah!'); }
+      });
+    }).catch(function () { toast('Iklan dilewati atau gagal dimuat.'); })
+      .then(function () { state.busy = false; state.lastInterstitial = Date.now(); btn.textContent = label; btn.disabled = false; renderQuiz(); if (state.user) $('btnAdCoins').disabled = state.user.ads_left <= 0; });
+  }
+  // In-App Interstitial otomatis: maks 3 iklan per 1 jam, jeda minimal 4 menit, iklan pertama setelah 2 menit
+  var inAppStarted = false;
+  function maybeInterstitial() {
+    var show = adFn(); if (!show || inAppStarted) return;
+    inAppStarted = true;
+    show({ type: 'inApp', inAppSettings: { frequency: 3, capping: 1, interval: 240, timeout: 120, everyPage: false } }).catch(function () {});
+  }
+
+  // ---------- Khodam ----------
+  $('btnKhodam').onclick = function () {
+    var name = $('khodamName').value.trim();
+    if (!name) { toast('Masukkan nama dulu'); return; }
+    if (state.busy) return; state.busy = true; tap();
+    var b = this; b.disabled = true; b.textContent = 'Menerawang...';
+    $('khodamResult').classList.remove('show');
+    setTimeout(function () {
+      api('khodam', { name: name }).then(function (d) {
+        if (!d.ok) { toast(d.message); return; }
+        var r = d.result;
+        $('kFor').textContent = 'Khodam milik ' + r.name + ':';
+        $('kName').textContent = r.khodam; $('kDesc').textContent = r.desc;
+        $('kPower').style.width = '0'; $('kPowerTxt').textContent = 'Kekuatan: ' + r.power + '%';
+        $('khodamResult').classList.add('show');
+        setTimeout(function () { $('kPower').style.width = r.power + '%'; }, 60);
+        haptic('success');
+        if (r.reward) { toast('+' + r.reward + ' koin (bonus cek khodam harian)'); coinBurst(b); }
+        state.lastKhodam = r;
+        maybeInterstitial();
+      }).catch(function (e) { toast(e.message || 'Koneksi bermasalah'); })
+        .then(function () { state.busy = false; b.disabled = false; b.textContent = 'Terawang Sekarang'; });
+    }, 900);
+  };
+  $('btnShareKhodam').onclick = function () {
+    var r = state.lastKhodam; if (!r) return;
+    share('Khodam ' + r.name + ' adalah ' + r.khodam + ' (' + r.power + '%)! Cek khodammu juga di sini:');
+  };
+
+  // ---------- Ranking ----------
+  function loadRank() {
+    api('leaderboard').then(function (d) {
+      var list = (d.top || []).map(function (r) {
+        return '<div class="rank' + (r.me ? ' me' : '') + '"><div class="no">' + r.rank + '</div><img src="' + (r.photo_url ? esc(r.photo_url) : IMG.idle) + '" alt=""><div class="nm">' + esc(r.first_name) + (r.me ? ' (kamu)' : '') + '</div><div class="cn">' + r.coins.toLocaleString('id-ID') + '</div></div>';
+      }).join('');
+      $('rankList').innerHTML = list || '<div class="muted center">Belum ada pemain.</div>';
+    }).catch(function (e) { $('rankList').innerHTML = '<div class="muted center">' + esc(e.message || 'Gagal memuat') + '</div>'; });
+  }
+
+  // ---------- Referral ----------
+  function share(text) {
+    var url = 'https://t.me/share/url?url=' + encodeURIComponent(refLink()) + '&text=' + encodeURIComponent(text);
+    if (tg && tg.openTelegramLink) tg.openTelegramLink(url); else window.open(url, '_blank');
+  }
+  $('btnShare').onclick = function () { share('Yuk cek khodam dan main kuis harian bareng Khodi, dapat koin gratis!'); };
+  $('btnCopy').onclick = function () {
+    var t = refLink();
+    (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function () { toast('Link disalin!'); }, function () { toast('Salin manual link di atas ya'); });
+  };
+
+  // ---------- Home actions ----------
+  $('btnDaily').onclick = function () {
+    if (state.busy) return; state.busy = true; var b = this; b.disabled = true; tap();
+    api('daily').then(function (d) {
+      toast(d.message);
+      if (d.ok) { haptic('success'); coinBurst(b); mood('menang', 'Hadiah diterima! Datang lagi besok ya.'); }
+    }).catch(function (e) { toast(e.message || 'Koneksi bermasalah'); b.disabled = false; })
+      .then(function () { state.busy = false; });
+  };
+  $('btnAdCoins').onclick = function () { watchAd('coins', this); };
+
+  // ---------- Nav ----------
+  Array.prototype.forEach.call(document.querySelectorAll('#nav button'), function (b) {
+    b.onclick = function () {
+      tap();
+      document.querySelectorAll('#nav button').forEach(function (x) { x.classList.remove('active'); });
+      document.querySelectorAll('.page').forEach(function (x) { x.classList.remove('active'); });
+      b.classList.add('active'); $('p-' + b.getAttribute('data-p')).classList.add('active');
+      document.querySelector('.pages').scrollTop = 0;
+      if (b.getAttribute('data-p') === 'rank') loadRank();
+    };
+  });
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+  // ---------- Start ----------
+  if (!tg || !tg.initData) {
+    $('loaderText').textContent = 'Buka aplikasi ini dari dalam Telegram ya.';
+    return;
+  }
+  api('init').then(function (d) {
+    $('loader').classList.add('hide');
+    setTimeout(maybeInterstitial, 3000);
+    if (d.isNew) mood('senang', 'Selamat datang, ' + (d.user.first_name || 'kawan') + '!');
+    if (d.message) toast(d.message);
+  }).catch(function (e) { $('loaderText').textContent = e.message || 'Gagal terhubung. Coba buka ulang.'; });
+})();
+</script>
+</body>
+</html>
