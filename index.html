@@ -33,11 +33,18 @@
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow:hidden}
-  body{
-    background:
-      linear-gradient(180deg,rgba(11,16,38,.25),rgba(11,16,38,.85) 70%,var(--bg)),
-      url('https://lh3.googleusercontent.com/d/1X14Il1xmGA4gz_AjJDkqGlzMrSuibMxy') center/cover no-repeat fixed, var(--bg);
-  }
+  body{background:var(--bg)}
+  /* Latar kota: lapisan tetap + zoom pelan + gradasi halus (menghilangkan garis keras) */
+  .bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+  /* Gambar kota punya 2 garis sambungan (di 29% dan 72% tinggi gambar). Hanya pita di antaranya yang ditampilkan, sisanya tertutup gradasi. */
+  .bg .city{position:absolute;left:0;right:0;top:-69.2vh;height:236vh;background:url('https://lh3.googleusercontent.com/d/1X14Il1xmGA4gz_AjJDkqGlzMrSuibMxy') center top/auto 100% no-repeat;transform-origin:50% 50.5%;animation:kenburns 40s ease-in-out infinite alternate;filter:saturate(1.15)}
+  .bg::after{content:"";position:absolute;inset:0;background:
+    radial-gradient(ellipse 80% 45% at 50% 28%,rgba(79,227,255,.10),transparent 70%),
+    linear-gradient(180deg,var(--bg) 0%,rgba(11,16,38,.55) 10%,rgba(11,16,38,.35) 28%,rgba(11,16,38,.50) 45%,rgba(11,16,38,.75) 62%,rgba(11,16,38,.92) 78%,var(--bg) 92%)}
+  @keyframes kenburns{from{transform:scale(1.02) translate(0,0)}to{transform:scale(1.1) translate(-2%,-.3%)}}
+  .dust{position:absolute;bottom:-10px;width:4px;height:4px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);opacity:0;animation:dust linear infinite}
+  .dust.p{background:var(--purple);box-shadow:0 0 8px var(--purple)}
+  @keyframes dust{0%{opacity:0;transform:translate(0,0)}10%{opacity:.8}90%{opacity:.5}100%{opacity:0;transform:translate(var(--dx,20px),-105vh)}}
   .app{position:relative;height:100%;display:flex;flex-direction:column;padding-top:var(--tg-content-safe-area-inset-top,0px)}
   /* Header */
   .header{display:flex;align-items:center;gap:10px;padding:12px 14px}
@@ -45,30 +52,56 @@
   .who{flex:1;min-width:0}
   .who b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .lvl{font-size:11px;color:var(--cyan);background:rgba(79,227,255,.12);border:1px solid var(--stroke);padding:2px 8px;border-radius:20px;display:inline-block;margin-top:3px}
-  .pill{display:flex;align-items:center;gap:6px;background:var(--glass);border:1px solid var(--stroke);padding:6px 10px;border-radius:20px;font-weight:700;font-size:14px;backdrop-filter:blur(10px)}
-  .pill img{width:22px;height:22px;border-radius:50%;object-fit:cover}
+  .pill{display:flex;align-items:center;gap:6px;background:rgba(22,30,68,.6);border:1px solid var(--stroke);padding:6px 10px;border-radius:20px;font-weight:700;font-size:14px}
+  .pill img{width:22px;height:22px;border-radius:50%;object-fit:cover;mix-blend-mode:lighten;-webkit-mask-image:radial-gradient(circle,#000 50%,transparent 70%);mask-image:radial-gradient(circle,#000 50%,transparent 70%)}
   /* Pages */
-  .pages{flex:1;overflow-y:auto;padding:4px 14px 110px;scrollbar-width:none}
+  .pages{flex:1;overflow-y:auto;padding:4px 14px calc(130px + var(--tg-safe-area-inset-bottom,0px));scrollbar-width:none;-webkit-overflow-scrolling:touch}
   .pages::-webkit-scrollbar{display:none}
-  .page{display:none;animation:fadeUp .35s ease}
+  .page{display:none}
   .page.active{display:block}
+  .page.active>.card{animation:fadeUp .35s ease backwards}
+  .page.active>.card+.card{animation-delay:.08s}
   @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-  .card{background:var(--glass);border:1px solid var(--stroke);border-radius:20px;padding:16px;margin-bottom:14px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 8px 30px rgba(0,0,0,.25)}
+  .card{background:linear-gradient(160deg,rgba(30,40,88,.62),rgba(16,22,52,.70));border:1px solid var(--stroke);border-radius:20px;padding:16px;margin-bottom:14px;box-shadow:0 8px 30px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.06)}
   h2{margin:0 0 10px;font-size:18px}
   .sub{color:var(--muted);font-size:13px;margin:0 0 12px}
   /* Hero */
   .hero{text-align:center;padding:6px 0 0}
-  .mascot-wrap{position:relative;width:210px;height:210px;margin:0 auto}
-  .mascot-wrap::before{content:"";position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle,rgba(79,227,255,.55),rgba(155,107,255,.25) 55%,transparent 70%);filter:blur(18px);animation:pulse 3s ease-in-out infinite}
+  /* mix-blend-mode lighten: latar navy gambar menyatu dengan latar aplikasi (tidak ada kotak/lingkaran gelap) */
+  .mascot-wrap{position:relative;width:220px;height:220px;margin:0 auto;animation:float 3.6s ease-in-out infinite;mix-blend-mode:lighten}
+  .mascot-wrap.sm{width:150px;height:150px}
+  .hero.sm{padding:0 0 4px}
+  .hero.sm .bubble{margin:-6px 0 12px}
+  .mascot-wrap::before{content:"";position:absolute;inset:14%;border-radius:50%;background:radial-gradient(circle,rgba(79,227,255,.45),rgba(155,107,255,.22) 55%,transparent 72%);filter:blur(22px);animation:pulse 3s ease-in-out infinite}
+  .mascot-wrap::after{content:"";position:absolute;left:28%;right:28%;bottom:2%;height:14px;border-radius:50%;background:radial-gradient(ellipse,rgba(79,227,255,.45),transparent 70%);filter:blur(4px);animation:shadow 3.6s ease-in-out infinite}
+  .ring{position:absolute;inset:8%;border-radius:50%;border:1px solid rgba(79,227,255,.25);border-top-color:rgba(79,227,255,.8);border-left-color:transparent;animation:spin 9s linear infinite}
+  .ring.r2{inset:2%;border-color:rgba(155,107,255,.18);border-bottom-color:rgba(155,107,255,.7);border-right-color:transparent;animation-duration:14s;animation-direction:reverse}
+  .tapper{position:relative;width:100%;height:100%;cursor:pointer}
+  .tapper.boing{animation:boing .55s cubic-bezier(.3,1.6,.5,1)}
   .mascot{position:relative;width:100%;height:100%;object-fit:cover;border-radius:50%;
-    -webkit-mask-image:radial-gradient(circle,#000 58%,transparent 71%);mask-image:radial-gradient(circle,#000 58%,transparent 71%);
-    animation:float 3.2s ease-in-out infinite}
+    -webkit-mask-image:radial-gradient(circle at 50% 48%,#000 40%,rgba(0,0,0,.6) 55%,transparent 69%);mask-image:radial-gradient(circle at 50% 48%,#000 40%,rgba(0,0,0,.6) 55%,transparent 69%);
+    transform-origin:50% 80%;animation:breathe 3.2s ease-in-out infinite;transition:opacity .18s}
+  .mascot.swap{animation:swapIn .45s cubic-bezier(.3,1.5,.5,1)}
+  .mist{position:absolute;left:50%;bottom:16%;width:0;height:0}
+  .mist i{position:absolute;width:10px;height:10px;border-radius:50%;background:radial-gradient(circle,rgba(79,227,255,.9),rgba(155,107,255,.3) 60%,transparent 70%);filter:blur(1px);opacity:0;animation:mist 2.8s ease-out infinite}
+  @keyframes mist{0%{opacity:0;transform:translate(0,0) scale(.4)}20%{opacity:.9}100%{opacity:0;transform:translate(var(--mx,0),-110px) scale(1.4)}}
   @keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-12px) rotate(1deg)}}
+  @keyframes breathe{0%,100%{transform:scale(1,1)}50%{transform:scale(1.025,.985)}}
+  @keyframes shadow{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(.75);opacity:.45}}
   @keyframes pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
-  .bubble{display:inline-block;background:rgba(18,26,61,.85);border:1px solid var(--stroke);padding:8px 14px;border-radius:16px;font-size:13px;margin-top:4px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes boing{0%{transform:scale(1)}30%{transform:scale(1.12,.88) translateY(6px)}60%{transform:scale(.94,1.08) translateY(-10px)}100%{transform:scale(1)}}
+  @keyframes swapIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+  .bubble{position:relative;display:inline-block;background:rgba(18,26,61,.88);border:1px solid var(--stroke);padding:9px 15px;border-radius:16px;font-size:13px;margin-top:-10px;min-height:36px;max-width:88%;box-shadow:0 4px 18px rgba(79,227,255,.12)}
+  .bubble::before{content:"";position:absolute;top:-6px;left:50%;width:10px;height:10px;background:inherit;border-left:1px solid var(--stroke);border-top:1px solid var(--stroke);transform:translateX(-50%) rotate(45deg)}
+  .bubble.pop{animation:pop .35s cubic-bezier(.2,1.4,.4,1)}
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
-  .stat{background:var(--glass);border:1px solid var(--stroke);border-radius:16px;padding:10px 6px;text-align:center}
-  .stat img{width:34px;height:34px;object-fit:cover;border-radius:50%;-webkit-mask-image:radial-gradient(circle,#000 55%,transparent 72%);mask-image:radial-gradient(circle,#000 55%,transparent 72%)}
+  .stat{position:relative;overflow:hidden;background:var(--glass);border:1px solid var(--stroke);border-radius:16px;padding:10px 6px;text-align:center;animation:fadeUp .5s ease backwards}
+  .stat:nth-child(2){animation-delay:.08s}.stat:nth-child(3){animation-delay:.16s}
+  .stat.bump b{animation:bump .5s cubic-bezier(.3,1.6,.5,1)}
+  @keyframes bump{50%{transform:scale(1.35);color:var(--gold)}}
+  .pill.bump{animation:bump .5s cubic-bezier(.3,1.6,.5,1)}
+  .stat img{width:34px;height:34px;object-fit:cover;border-radius:50%;mix-blend-mode:lighten;-webkit-mask-image:radial-gradient(circle,#000 55%,transparent 72%);mask-image:radial-gradient(circle,#000 55%,transparent 72%)}
   .stat b{display:block;font-size:18px;margin-top:2px}
   .stat span{font-size:11px;color:var(--muted)}
   /* Buttons */
@@ -77,12 +110,18 @@
   .btn:active{transform:scale(.97)}
   .btn[disabled]{opacity:.45;box-shadow:none}
   .btn.gold{background:linear-gradient(135deg,#ffe27a,var(--gold) 50%,#ff9d3b)}
+  .btn{position:relative;overflow:hidden}
+  .btn.ready{animation:glow 1.8s ease-in-out infinite}
+  .btn.ready::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.75),transparent);transform:skewX(-20deg);animation:shine 2.4s ease-in-out infinite}
+  @keyframes glow{0%,100%{box-shadow:0 6px 20px rgba(255,190,60,.35);transform:scale(1)}50%{box-shadow:0 6px 34px rgba(255,190,60,.8);transform:scale(1.02)}}
+  @keyframes shine{0%{left:-60%}55%,100%{left:130%}}
+  .btn.wait{background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--stroke);box-shadow:none;opacity:1;font-variant-numeric:tabular-nums}
   .btn.ghost{background:var(--glass);color:var(--text);border:1px solid var(--stroke);box-shadow:none}
   .row{display:flex;gap:10px}
   .row .btn{flex:1}
   /* Daily */
   .daily{display:flex;align-items:center;gap:12px}
-  .daily img{width:74px;height:74px;object-fit:cover;border-radius:18px;-webkit-mask-image:radial-gradient(circle,#000 55%,transparent 72%);mask-image:radial-gradient(circle,#000 55%,transparent 72%);animation:float 2.6s ease-in-out infinite}
+  .daily img{width:74px;height:74px;object-fit:cover;border-radius:18px;mix-blend-mode:lighten;-webkit-mask-image:radial-gradient(circle,#000 55%,transparent 72%);mask-image:radial-gradient(circle,#000 55%,transparent 72%);animation:float 2.6s ease-in-out infinite}
   .daily .info{flex:1}
   .days{display:flex;gap:5px;margin-top:8px}
   .days i{flex:1;height:6px;border-radius:4px;background:rgba(255,255,255,.12)}
@@ -100,7 +139,7 @@
   .opt.wrong{background:rgba(255,93,122,.18);border-color:var(--red);animation:shake .35s}
   @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
   .lives{display:flex;align-items:center;gap:4px}
-  .lives img{width:22px;height:22px;border-radius:50%;object-fit:cover}
+  .lives img{width:22px;height:22px;border-radius:50%;object-fit:cover;mix-blend-mode:lighten;-webkit-mask-image:radial-gradient(circle,#000 50%,transparent 70%);mask-image:radial-gradient(circle,#000 50%,transparent 70%)}
   /* Khodam */
   .input{width:100%;background:rgba(0,0,0,.25);border:1px solid var(--stroke);color:var(--text);padding:14px;border-radius:14px;font-size:15px;outline:none;margin-bottom:10px}
   .input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(79,227,255,.15)}
@@ -128,12 +167,20 @@
   .toast{position:fixed;left:50%;top:calc(16px + var(--tg-content-safe-area-inset-top,0px));transform:translate(-50%,-120px);background:rgba(18,26,61,.95);border:1px solid var(--stroke);padding:10px 16px;border-radius:14px;font-size:14px;z-index:20;transition:transform .35s cubic-bezier(.2,1.2,.4,1);max-width:90%;text-align:center}
   .toast.show{transform:translate(-50%,0)}
   .loader{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:30;transition:opacity .4s}
-  .loader img{width:150px;height:150px;border-radius:50%;object-fit:cover;-webkit-mask-image:radial-gradient(circle,#000 58%,transparent 71%);mask-image:radial-gradient(circle,#000 58%,transparent 71%);animation:float 2s ease-in-out infinite}
+  .loader img{width:150px;height:150px;border-radius:50%;object-fit:cover;mix-blend-mode:lighten;-webkit-mask-image:radial-gradient(circle,#000 58%,transparent 71%);mask-image:radial-gradient(circle,#000 58%,transparent 71%);animation:float 2s ease-in-out infinite}
   .loader.hide{opacity:0;pointer-events:none}
-  .coin-fly{position:fixed;width:28px;height:28px;border-radius:50%;z-index:25;pointer-events:none;object-fit:cover;transition:all .8s cubic-bezier(.5,-.3,.7,1)}
+  .coin-fly{position:fixed;width:28px;height:28px;border-radius:50%;z-index:25;pointer-events:none;object-fit:cover;mix-blend-mode:lighten;transition:all .8s cubic-bezier(.5,-.3,.7,1);-webkit-mask-image:radial-gradient(circle,#000 55%,transparent 72%);mask-image:radial-gradient(circle,#000 55%,transparent 72%)}
+  .confetti{position:fixed;width:8px;height:12px;border-radius:2px;z-index:24;pointer-events:none;animation:burst 1.1s cubic-bezier(.15,.8,.4,1) forwards}
+  @keyframes burst{0%{opacity:1;transform:translate(0,0) rotate(0)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--r))}}
+  .float-txt{position:fixed;z-index:26;pointer-events:none;font-weight:900;font-size:22px;color:var(--gold);text-shadow:0 0 12px rgba(255,190,60,.8),0 2px 0 #7a4a00;animation:floatUp 1.3s ease-out forwards}
+  @keyframes floatUp{0%{opacity:0;transform:translate(-50%,10px) scale(.6)}20%{opacity:1;transform:translate(-50%,-10px) scale(1.15)}100%{opacity:0;transform:translate(-50%,-70px) scale(1)}}
+  @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.dust,.mist{display:none}}
   .center{text-align:center}
   .muted{color:var(--muted);font-size:13px}
-  .reflink{font-size:12px;word-break:break-all;background:rgba(0,0,0,.25);border:1px dashed var(--stroke);padding:10px;border-radius:12px;margin:10px 0}
+  .reflink{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:ui-monospace,Menlo,monospace;color:var(--cyan);background:rgba(0,0,0,.25);border:1px dashed var(--stroke);padding:11px 12px;border-radius:12px;margin:10px 0}
+  .ref-stat{display:inline-block;min-width:150px;margin:0 auto 6px;padding:10px 18px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid var(--stroke)}
+  .ref-stat b{display:block;font-size:22px}
+  .ref-stat span{font-size:11px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -142,25 +189,31 @@
   <div class="muted" id="loaderText">Memanggil Khodi...</div>
 </div>
 
+<div class="bg" id="bg"><div class="city"></div></div>
+
 <div class="app">
   <div class="header">
     <img class="avatar" id="avatar" src="https://lh3.googleusercontent.com/d/1tZhMARr1POvJTc6MX9-ErWVXzJ1CeJ5b" alt="Avatar" />
     <div class="who"><b id="uname">Pemain</b><span class="lvl" id="ulevel">Level 1</span></div>
     <div class="pill"><img src="https://lh3.googleusercontent.com/d/12lcT6hzNWK4dDr4LvyzqU2Xy-g3Yhkmc" alt="Nyawa" /><span id="hLives">0</span></div>
-    <div class="pill"><img src="https://lh3.googleusercontent.com/d/19y69IDvF8YmJgIRNjt6pyvHPPt9mDJMe" alt="Koin" id="coinIcon" /><span id="hCoins">0</span></div>
+    <div class="pill" id="coinPill"><img src="https://lh3.googleusercontent.com/d/19y69IDvF8YmJgIRNjt6pyvHPPt9mDJMe" alt="Koin" id="coinIcon" /><span id="hCoins">0</span></div>
   </div>
 
   <div class="pages">
     <!-- HOME -->
     <section class="page active" id="p-home">
       <div class="hero">
-        <div class="mascot-wrap"><img class="mascot" id="mascot" src="https://lh3.googleusercontent.com/d/1tZhMARr1POvJTc6MX9-ErWVXzJ1CeJ5b" alt="Khodi" /></div>
+        <div class="mascot-wrap">
+          <div class="ring"></div><div class="ring r2"></div>
+          <div class="tapper" id="tapper"><img class="mascot" id="mascot" src="https://lh3.googleusercontent.com/d/1tZhMARr1POvJTc6MX9-ErWVXzJ1CeJ5b" alt="Khodi" /></div>
+          <div class="mist" id="mist"></div>
+        </div>
         <div class="bubble" id="bubble">Halo! Aku Khodi, penjaga khodammu.</div>
       </div>
       <div class="stats">
-        <div class="stat"><img src="https://lh3.googleusercontent.com/d/19y69IDvF8YmJgIRNjt6pyvHPPt9mDJMe" alt="" /><b id="sCoins">0</b><span>Koin</span></div>
-        <div class="stat"><img src="https://lh3.googleusercontent.com/d/1BAlVTmDEgtzXTeYyihy9LkLkq3dPjlXi" alt="" /><b id="sStreak">0</b><span>Streak</span></div>
-        <div class="stat"><img src="https://lh3.googleusercontent.com/d/12lcT6hzNWK4dDr4LvyzqU2Xy-g3Yhkmc" alt="" /><b id="sLives">0</b><span>Nyawa</span></div>
+        <div class="stat" id="statCoins"><img src="https://lh3.googleusercontent.com/d/19y69IDvF8YmJgIRNjt6pyvHPPt9mDJMe" alt="" /><b id="sCoins">0</b><span>Koin</span></div>
+        <div class="stat" id="statStreak"><img src="https://lh3.googleusercontent.com/d/1BAlVTmDEgtzXTeYyihy9LkLkq3dPjlXi" alt="" /><b id="sStreak">0</b><span>Streak</span></div>
+        <div class="stat" id="statLives"><img src="https://lh3.googleusercontent.com/d/12lcT6hzNWK4dDr4LvyzqU2Xy-g3Yhkmc" alt="" /><b id="sLives">0</b><span>Nyawa</span></div>
       </div>
       <div class="card">
         <div class="daily">
@@ -183,6 +236,10 @@
 
     <!-- QUIZ -->
     <section class="page" id="p-quiz">
+      <div class="hero sm">
+        <div class="mascot-wrap sm"><img class="mascot" id="quizMascot" src="https://lh3.googleusercontent.com/d/1tZhMARr1POvJTc6MX9-ErWVXzJ1CeJ5b" alt="Khodi" /></div>
+        <div class="bubble" id="quizBubble">Tiap jawaban benar +30 koin!</div>
+      </div>
       <div class="card">
         <div class="row" style="align-items:center;justify-content:space-between;margin-bottom:10px">
           <h2 style="margin:0">Kuis Harian</h2>
@@ -195,8 +252,10 @@
 
     <!-- KHODAM -->
     <section class="page" id="p-khodam">
+      <div class="hero sm">
+        <div class="mascot-wrap sm"><img class="mascot" src="https://lh3.googleusercontent.com/d/1-6KJjNivLX20QXndrj8KPumTzsnHQewR" alt="Ramal" /></div>
+      </div>
       <div class="card center">
-        <div class="mascot-wrap" style="width:170px;height:170px"><img class="mascot" src="https://lh3.googleusercontent.com/d/1-6KJjNivLX20QXndrj8KPumTzsnHQewR" alt="Ramal" /></div>
         <h2>Cek Khodam</h2>
         <p class="sub">Ketik nama (kamu atau temanmu). Hanya hiburan ya!</p>
         <input class="input" id="khodamName" maxlength="40" placeholder="Masukkan nama..." />
@@ -215,20 +274,31 @@
 
     <!-- RANK -->
     <section class="page" id="p-rank">
+      <div class="hero sm">
+        <div class="mascot-wrap sm"><img class="mascot" src="https://lh3.googleusercontent.com/d/1MBUMQuVVWWH0So5wOFklVGLlK0p0JMKZ" alt="Juara" /></div>
+        <div class="bubble">Siapa raja koin hari ini?</div>
+      </div>
       <div class="card">
         <h2>Top 10 Pemain</h2>
         <p class="sub">Kumpulkan koin sebanyak-banyaknya!</p>
         <div id="rankList"><div class="muted center">Memuat...</div></div>
       </div>
+      <div class="card center">
+        <h2>Naikkan Peringkatmu</h2>
+        <p class="sub">Undang teman: kamu dapat <b>500 koin</b>, temanmu <b>200 koin</b>.</p>
+        <button class="btn" id="btnRankInvite">Undang Teman</button>
+      </div>
     </section>
 
     <!-- FRIENDS -->
     <section class="page" id="p-friends">
+      <div class="hero sm">
+        <div class="mascot-wrap sm"><img class="mascot" src="https://lh3.googleusercontent.com/d/1mVjnHnTSxr9yB6UbexvvDNfnCi1CpK_H" alt="Senang" /></div>
+      </div>
       <div class="card center">
-        <div class="mascot-wrap" style="width:160px;height:160px"><img class="mascot" src="https://lh3.googleusercontent.com/d/1mVjnHnTSxr9yB6UbexvvDNfnCi1CpK_H" alt="Senang" /></div>
         <h2>Undang Teman</h2>
         <p class="sub">Kamu dapat <b>500 koin</b>, temanmu dapat <b>200 koin</b> untuk setiap undangan.</p>
-        <div class="stat" style="margin:0 auto 10px;max-width:160px"><b id="refCount">0</b><span>Teman diundang</span></div>
+        <div class="ref-stat"><b id="refCount">0</b><span>Teman diundang</span></div>
         <div class="reflink" id="refLink">-</div>
         <div class="row">
           <button class="btn" id="btnShare">Bagikan</button>
@@ -258,6 +328,7 @@
     kaget: 'https://lh3.googleusercontent.com/d/1bWoXpGm0s3OvevtCPtLj458lOHTPYwqm',
     menang: 'https://lh3.googleusercontent.com/d/1MBUMQuVVWWH0So5wOFklVGLlK0p0JMKZ',
     sedih: 'https://lh3.googleusercontent.com/d/1FTLj6kJs-WD-V51wA2hWamCzZ78VKGTX',
+    ramal: 'https://lh3.googleusercontent.com/d/1-6KJjNivLX20QXndrj8KPumTzsnHQewR',
     koin: 'https://lh3.googleusercontent.com/d/19y69IDvF8YmJgIRNjt6pyvHPPt9mDJMe',
     nyawa: 'https://lh3.googleusercontent.com/d/12lcT6hzNWK4dDr4LvyzqU2Xy-g3Yhkmc'
   };
@@ -266,7 +337,9 @@
 
   if (tg) {
     tg.ready(); tg.expand();
-    try { tg.setHeaderColor('#0B1026'); tg.setBackgroundColor('#0B1026'); if (tg.setBottomBarColor) tg.setBottomBarColor('#0B1026'); } catch (e) {}
+    try { tg.setHeaderColor('#0B1026'); } catch (e) {}
+    try { tg.setBackgroundColor('#0B1026'); } catch (e) {}
+    try { if (tg.setBottomBarColor) tg.setBottomBarColor('#0B1026'); } catch (e) {}
     try { if (tg.disableVerticalSwipes) tg.disableVerticalSwipes(); } catch (e) {}
   }
   Object.keys(IMG).forEach(function (k) { var i = new Image(); i.src = IMG[k]; });
@@ -274,11 +347,116 @@
   function haptic(t) { try { tg.HapticFeedback.notificationOccurred(t); } catch (e) {} }
   function tap() { try { tg.HapticFeedback.impactOccurred('light'); } catch (e) {} }
   function toast(msg) { var t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(function () { t.classList.remove('show'); }, 2600); }
+  function setMascot(name) {
+    var m = $('mascot'); var src = IMG[name] || IMG.idle; if (m.getAttribute('src') === src) return;
+    m.style.opacity = 0;
+    setTimeout(function () { m.src = src; m.style.opacity = 1; m.classList.remove('swap'); void m.offsetWidth; m.classList.add('swap'); }, 160);
+  }
+  function say(text) {
+    var b = $('bubble'); if (!text) return;
+    b.textContent = text; b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop');
+  }
   function mood(name, text) {
-    var m = $('mascot'); m.style.opacity = 0;
-    setTimeout(function () { m.src = IMG[name] || IMG.idle; m.style.opacity = 1; }, 150);
-    if (text) $('bubble').textContent = text;
-    clearTimeout(mood._h); mood._h = setTimeout(function () { m.src = IMG.idle; }, 4000);
+    setMascot(name); say(text);
+    clearTimeout(mood._h); mood._h = setTimeout(function () { setMascot('idle'); }, 4500);
+  }
+  function quizFace(name, text, quiet) {
+    var m = $('quizMascot'), b = $('quizBubble'); var src = IMG[name] || IMG.idle;
+    if (m.getAttribute('src') !== src) {
+      m.style.opacity = 0;
+      setTimeout(function () { m.src = src; m.style.opacity = 1; m.classList.remove('swap'); void m.offsetWidth; m.classList.add('swap'); }, 160);
+    }
+    if (text && b.textContent !== text) { b.textContent = text; if (!quiet) { b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); } }
+  }
+  function bump(id) { var el = $(id); if (!el) return; el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
+  function confetti(fromEl) {
+    var r = fromEl.getBoundingClientRect(); var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    var colors = ['#4fe3ff', '#9b6bff', '#ffcf4a', '#3ef0a1', '#ff7ad9'];
+    for (var i = 0; i < 26; i++) {
+      var c = document.createElement('i'); c.className = 'confetti';
+      var ang = Math.random() * Math.PI * 2, dist = 70 + Math.random() * 110;
+      c.style.left = cx + 'px'; c.style.top = cy + 'px'; c.style.background = colors[i % colors.length];
+      c.style.setProperty('--dx', Math.cos(ang) * dist + 'px'); c.style.setProperty('--dy', (Math.sin(ang) * dist - 60) + 'px');
+      c.style.setProperty('--r', (Math.random() * 720 - 360) + 'deg');
+      document.body.appendChild(c); setTimeout(function (el) { return function () { el.remove(); }; }(c), 1200);
+    }
+  }
+  function floatText(fromEl, text) {
+    var r = fromEl.getBoundingClientRect(); var t = document.createElement('div'); t.className = 'float-txt';
+    t.textContent = text; t.style.left = (r.left + r.width / 2) + 'px'; t.style.top = (r.top - 10) + 'px';
+    document.body.appendChild(t); setTimeout(function () { t.remove(); }, 1400);
+  }
+  function celebrate(el, amount) {
+    coinBurst(el); confetti(el); if (amount) floatText(el, '+' + amount);
+    setTimeout(function () { bump('coinPill'); bump('statCoins'); }, 850);
+  }
+  // Partikel latar & kabut spirit dari ekor Khodi
+  (function ambient() {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; if (reduce) return;
+    var bg = $('bg');
+    for (var i = 0; i < 14; i++) {
+      var d = document.createElement('i'); d.className = 'dust' + (i % 3 === 0 ? ' p' : '');
+      d.style.left = (Math.random() * 100) + '%'; d.style.setProperty('--dx', (Math.random() * 80 - 40) + 'px');
+      var s = 2 + Math.random() * 3; d.style.width = d.style.height = s + 'px';
+      d.style.animationDuration = (12 + Math.random() * 14) + 's'; d.style.animationDelay = (-Math.random() * 20) + 's';
+      bg.appendChild(d);
+    }
+    var mist = $('mist');
+    for (var j = 0; j < 7; j++) {
+      var m = document.createElement('i'); var sz = 6 + Math.random() * 10;
+      m.style.width = m.style.height = sz + 'px'; m.style.left = (Math.random() * 30 - 15 - sz / 2) + 'px';
+      m.style.setProperty('--mx', (Math.random() * 60 - 30) + 'px');
+      m.style.animationDelay = (j * 0.4) + 's'; m.style.animationDuration = (2.4 + Math.random() * 1.2) + 's';
+      mist.appendChild(m);
+    }
+  })();
+  // Tap Khodi
+  var LINES = [
+    function (n) { return 'Halo ' + n + '! Senang ketemu kamu.'; },
+    function () { return 'Hehe, geli! Jangan dicolek terus~'; },
+    function () { return 'Sudah klaim hadiah harian hari ini?'; },
+    function () { return 'Coba kuis harian, siapa tahu benar semua!'; },
+    function () { return 'Mau aku terawang khodam temanmu?'; },
+    function () { return 'Ajak teman, kita dapat 500 koin!'; },
+    function () { return 'Aku penjaga khodammu. Rawr!'; },
+    function () { return 'Koinmu makin banyak, mantap!'; }
+  ];
+  var tapCount = 0;
+  $('tapper').onclick = function () {
+    var t = this; t.classList.remove('boing'); void t.offsetWidth; t.classList.add('boing'); tap();
+    tapCount++;
+    var n = (state.user && state.user.first_name) || 'kawan';
+    if (tapCount % 7 === 0) { mood('kaget', 'Eh! Kaget aku, ' + n + '!'); return; }
+    var line = LINES[Math.floor(Math.random() * LINES.length)](n);
+    if (Math.random() < 0.5) mood('senang', line); else say(line);
+  };
+  // Hitung mundur ke hadiah berikutnya (reset 00:00 WIB, sama dengan backend)
+  function msToNextReset() {
+    var now = Date.now(); var wib = now + 7 * 3600000;
+    var next = Math.floor(wib / 86400000) * 86400000 + 86400000;
+    return next - wib;
+  }
+  function fmt(ms) {
+    var s = Math.max(0, Math.floor(ms / 1000)); var h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60;
+    return (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m + ':' + (x < 10 ? '0' : '') + x;
+  }
+  var countdownTimer = null;
+  function updateDailyBtn() {
+    var b = $('btnDaily'); var u = state.user; if (!u) return;
+    clearInterval(countdownTimer);
+    if (!u.daily_claimed) {
+      b.disabled = false; b.classList.add('ready'); b.classList.remove('wait');
+      var next = 50 * Math.min((u.streak || 0) + 1, 7);
+      b.textContent = 'Klaim +' + next + ' Koin';
+      return;
+    }
+    b.disabled = true; b.classList.remove('ready'); b.classList.add('wait');
+    var tick = function () {
+      var ms = msToNextReset();
+      if (ms <= 1000) { clearInterval(countdownTimer); api('init').catch(function () {}); return; }
+      b.textContent = 'Hadiah berikutnya ' + fmt(ms);
+    };
+    tick(); countdownTimer = setInterval(tick, 1000);
   }
   function animateNum(el, to) {
     var from = Number(el.textContent.replace(/\D/g, '')) || 0; if (from === to) return;
@@ -315,14 +493,17 @@
     $('ulevel').textContent = 'Level ' + u.level;
     if (u.photo_url) $('avatar').src = u.photo_url;
     animateNum($('hCoins'), u.coins); animateNum($('sCoins'), u.coins);
+    var prevLives = Number($('sLives').textContent) || 0, prevStreak = Number($('sStreak').textContent) || 0;
     $('hLives').textContent = u.lives; $('sLives').textContent = u.lives; $('sStreak').textContent = u.streak;
+    if (state.rendered && u.lives > prevLives) bump('statLives');
+    if (state.rendered && u.streak > prevStreak) bump('statStreak');
+    state.rendered = true;
     $('adsLeft').textContent = u.ads_left;
     $('btnAdCoins').disabled = u.ads_left <= 0;
     var days = ''; var s = u.streak % 7 || (u.streak ? 7 : 0);
     for (var i = 1; i <= 7; i++) days += '<i class="' + (i <= s ? 'on' : '') + '"></i>';
     $('days').innerHTML = days;
-    $('btnDaily').disabled = u.daily_claimed;
-    $('btnDaily').textContent = u.daily_claimed ? 'Sudah diklaim, kembali besok' : 'Klaim Hadiah';
+    updateDailyBtn();
     $('dailyText').textContent = u.daily_claimed ? 'Streak ' + u.streak + ' hari. Mantap!' : 'Hadiah naik tiap hari streak (maks 350)';
     $('refCount').textContent = u.referrals || 0;
     $('refLink').textContent = refLink();
@@ -349,14 +530,17 @@
     $('qProgress').innerHTML = prog;
     var box = $('quizBox');
     if (next < 0) {
-      box.innerHTML = '<div class="center"><img src="' + IMG.menang + '" style="width:140px;border-radius:50%;-webkit-mask-image:radial-gradient(circle,#000 58%,transparent 71%);mask-image:radial-gradient(circle,#000 58%,transparent 71%)"><h2>Kuis hari ini selesai!</h2><p class="sub">Benar ' + q.correct + ' dari ' + q.questions.length + '. Soal baru besok.</p></div>';
+      quizFace('menang', 'Hebat! Kuis hari ini beres.', true);
+      box.innerHTML = '<div class="center"><h2>Kuis hari ini selesai!</h2><p class="sub">Benar ' + q.correct + ' dari ' + q.questions.length + '. Soal baru besok.</p></div>';
       return;
     }
     if (state.user.lives <= 0) {
-      box.innerHTML = '<div class="center"><img src="' + IMG.sedih + '" style="width:140px;border-radius:50%;-webkit-mask-image:radial-gradient(circle,#000 58%,transparent 71%);mask-image:radial-gradient(circle,#000 58%,transparent 71%)"><h2>Nyawa habis</h2><p class="sub">Tonton iklan singkat untuk +1 nyawa.</p><button class="btn" id="btnAdLife">Tambah Nyawa</button></div>';
+      quizFace('sedih', 'Yah, nyawamu habis...', true);
+      box.innerHTML = '<div class="center"><h2>Nyawa habis</h2><p class="sub">Tonton iklan singkat untuk +1 nyawa.</p><button class="btn" id="btnAdLife">Tambah Nyawa</button></div>';
       $('btnAdLife').onclick = function () { watchAd('life', this); };
       return;
     }
+    if (!state.busy) quizFace('idle', next === 0 ? 'Tiap jawaban benar +30 koin!' : 'Soal ' + (next + 1) + ', semangat!', true);
     var cur = q.questions[next];
     var html = '<div class="muted">Soal ' + (next + 1) + ' dari ' + q.questions.length + '</div><div class="question">' + esc(cur.q) + '</div>';
     cur.options.forEach(function (o, i) { html += '<button class="opt" data-i="' + i + '">' + esc(o) + '</button>'; });
@@ -373,8 +557,8 @@
     api('quiz_answer', { qid: qid, choice: choice }).then(function (d) {
       state.quiz = keep; // tahan tampilan sebentar
       if (!d.ok) { toast(d.message); state.quiz = d.quiz; renderQuiz(); return; }
-      if (d.result.correct) { btn.classList.add('correct'); haptic('success'); coinBurst(btn); mood('senang', 'Benar! Kamu pintar!'); }
-      else { btn.classList.add('wrong'); all[d.result.correctIndex].classList.add('correct'); haptic('error'); mood('kaget', 'Yah, salah. Semangat!'); }
+      if (d.result.correct) { btn.classList.add('correct'); haptic('success'); celebrate(btn, 30); quizFace('menang', 'Benar! Kamu pintar!'); }
+      else { btn.classList.add('wrong'); all[d.result.correctIndex].classList.add('correct'); haptic('error'); quizFace(state.user && state.user.lives <= 0 ? 'sedih' : 'kaget', 'Yah, salah. Semangat!'); }
       toast(d.message);
       setTimeout(function () { state.quiz = d.quiz; renderQuiz(); maybeInterstitial(); }, 1300);
     }).catch(function (e) { toast(e.message || 'Koneksi bermasalah'); state.quiz = oldState; renderQuiz(); })
@@ -391,7 +575,7 @@
     show({ type: 'end', ymid: state.user.id + '-' + purpose + '-' + Date.now(), requestVar: purpose }).then(function () {
       return api('ad_reward', { purpose: purpose }).then(function (d) {
         toast(d.message);
-        if (d.ok) { haptic('success'); if (purpose === 'coins') coinBurst(btn); mood('menang', purpose === 'life' ? 'Nyawa bertambah!' : 'Koin bertambah!'); }
+        if (d.ok) { haptic('success'); if (purpose === 'coins') celebrate(btn, 100); else confetti(btn); mood('senang', purpose === 'life' ? 'Nyawa bertambah!' : 'Koin bertambah!'); }
       });
     }).catch(function () { toast('Iklan dilewati atau gagal dimuat.'); })
       .then(function () { state.busy = false; state.lastInterstitial = Date.now(); btn.textContent = label; btn.disabled = false; renderQuiz(); if (state.user) $('btnAdCoins').disabled = state.user.ads_left <= 0; });
@@ -410,6 +594,7 @@
     if (!name) { toast('Masukkan nama dulu'); return; }
     if (state.busy) return; state.busy = true; tap();
     var b = this; b.disabled = true; b.textContent = 'Menerawang...';
+    setMascot('ramal'); say('Hmm... aku sedang menerawang khodam ' + name + '...');
     $('khodamResult').classList.remove('show');
     setTimeout(function () {
       api('khodam', { name: name }).then(function (d) {
@@ -421,7 +606,9 @@
         $('khodamResult').classList.add('show');
         setTimeout(function () { $('kPower').style.width = r.power + '%'; }, 60);
         haptic('success');
-        if (r.reward) { toast('+' + r.reward + ' koin (bonus cek khodam harian)'); coinBurst(b); }
+        confetti($('kName'));
+        mood('senang', 'Khodam ' + r.name + ': ' + r.khodam + '!');
+        if (r.reward) { toast('+' + r.reward + ' koin (bonus cek khodam harian)'); celebrate(b, r.reward); }
         state.lastKhodam = r;
         maybeInterstitial();
       }).catch(function (e) { toast(e.message || 'Koneksi bermasalah'); })
@@ -448,6 +635,7 @@
     var url = 'https://t.me/share/url?url=' + encodeURIComponent(refLink()) + '&text=' + encodeURIComponent(text);
     if (tg && tg.openTelegramLink) tg.openTelegramLink(url); else window.open(url, '_blank');
   }
+  $('btnRankInvite').onclick = function () { share('Yuk cek khodam dan main kuis harian bareng Khodi, dapat koin gratis!'); };
   $('btnShare').onclick = function () { share('Yuk cek khodam dan main kuis harian bareng Khodi, dapat koin gratis!'); };
   $('btnCopy').onclick = function () {
     var t = refLink();
@@ -459,8 +647,9 @@
     if (state.busy) return; state.busy = true; var b = this; b.disabled = true; tap();
     api('daily').then(function (d) {
       toast(d.message);
-      if (d.ok) { haptic('success'); coinBurst(b); mood('menang', 'Hadiah diterima! Datang lagi besok ya.'); }
-    }).catch(function (e) { toast(e.message || 'Koneksi bermasalah'); b.disabled = false; })
+      if (d.ok) { haptic('success'); celebrate(b, d.result && d.result.reward); mood('menang', 'Hadiah diterima! Datang lagi besok ya.'); }
+      else updateDailyBtn();
+    }).catch(function (e) { toast(e.message || 'Koneksi bermasalah'); updateDailyBtn(); })
       .then(function () { state.busy = false; });
   };
   $('btnAdCoins').onclick = function () { watchAd('coins', this); };
@@ -487,7 +676,10 @@
   api('init').then(function (d) {
     $('loader').classList.add('hide');
     setTimeout(maybeInterstitial, 3000);
-    if (d.isNew) mood('senang', 'Selamat datang, ' + (d.user.first_name || 'kawan') + '!');
+    var n = d.user.first_name || 'kawan';
+    if (d.isNew) mood('senang', 'Selamat datang, ' + n + '!');
+    else if (!d.user.daily_claimed) mood('senang', 'Halo lagi, ' + n + '! Hadiah harianmu sudah menunggu.');
+    else say('Halo, ' + n + '! Tap aku kalau bosan ya.');
     if (d.message) toast(d.message);
   }).catch(function (e) { $('loaderText').textContent = e.message || 'Gagal terhubung. Coba buka ulang.'; });
 })();
