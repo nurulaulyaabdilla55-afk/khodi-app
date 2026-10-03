@@ -203,6 +203,47 @@
   .amounts button.on{border-color:var(--gold);background:rgba(255,207,74,.12);color:var(--gold)}
   .amounts button[disabled]{opacity:.35}
   .fine{font-size:11px;color:var(--muted);line-height:1.5;margin-top:10px}
+  .rules-link{display:block;width:100%;background:none;border:1px dashed var(--stroke);color:var(--cyan);padding:11px;border-radius:14px;font-size:13px;font-weight:700;cursor:pointer;margin-bottom:14px}
+  .rules h3{font-size:15px;margin:16px 0 8px;color:var(--cyan)}
+  .rules h3:first-of-type{margin-top:4px}
+  .rules ol,.rules ul{margin:0;padding-left:20px;font-size:13px;line-height:1.6;color:var(--text)}
+  .rules li{margin-bottom:4px}
+  .rules .warn li::marker{color:var(--red)}
+  .rules .note{font-size:12px;color:var(--muted);line-height:1.5;background:rgba(255,255,255,.04);border:1px solid var(--stroke);border-radius:12px;padding:10px;margin-top:14px}
+  .rate{display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:13px;background:rgba(0,0,0,.2);border-radius:12px;padding:10px 12px}
+  .rate b{color:var(--gold);text-align:right}
+  .agree{display:flex;align-items:flex-start;gap:10px;font-size:13px;margin:16px 0 12px;cursor:pointer}
+  .agree input{width:20px;height:20px;accent-color:var(--cyan);flex:none;margin-top:1px}
+  .mission{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+  .mission:last-child{border-bottom:0}
+  .mission .mi{flex:1;min-width:0}
+  .mission .mt{font-size:13.5px;font-weight:700}
+  .mission .mbar{height:6px;border-radius:4px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:6px}
+  .mission .mbar i{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));transition:width .6s ease}
+  .mission .mp{font-size:11px;color:var(--muted);margin-top:3px}
+  .mission .mbtn{flex:none;border:0;border-radius:12px;padding:8px 10px;font-size:12px;font-weight:800;min-width:74px;cursor:pointer;background:rgba(255,255,255,.07);color:var(--muted)}
+  .mission .mbtn.go{background:linear-gradient(135deg,#ffe27a,var(--gold) 50%,#ff9d3b);color:#06102a;animation:glow 1.8s ease-in-out infinite}
+  .mission .mbtn.done{background:rgba(62,240,161,.15);color:var(--green)}
+  .mission.big .mt{color:var(--gold)}
+  .mhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}
+  .mhead small{font-size:11px;color:var(--muted)}
+  .first-wd{display:none;background:linear-gradient(135deg,rgba(62,240,161,.14),rgba(79,227,255,.10));border:1px solid rgba(62,240,161,.4);border-radius:14px;padding:10px 12px;font-size:12.5px;margin:10px 0 0}
+  .first-wd b{color:var(--green)}
+  .linkbtn{background:none;border:0;color:var(--cyan);font-size:12.5px;font-weight:700;padding:8px 0 0;cursor:pointer;width:100%}
+  .tabs{display:flex;gap:6px;background:rgba(0,0,0,.25);padding:4px;border-radius:12px;margin-bottom:12px}
+  .tabs button{flex:1;border:0;background:none;color:var(--muted);padding:9px;border-radius:9px;font-weight:700;font-size:13px;cursor:pointer}
+  .tabs button.on{background:rgba(79,227,255,.15);color:var(--cyan)}
+  .txrow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px}
+  .txrow .tn{flex:1;min-width:0}
+  .txrow .tn small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+  .txrow .ta{font-weight:800;white-space:nowrap}
+  .txrow .ta.plus{color:var(--green)} .txrow .ta.minus{color:var(--red)}
+  .badge{font-size:11px;font-weight:800;padding:3px 9px;border-radius:20px;white-space:nowrap}
+  .badge.Diproses{background:rgba(255,207,74,.15);color:var(--gold)}
+  .badge.Berhasil{background:rgba(62,240,161,.15);color:var(--green)}
+  .badge.Ditolak{background:rgba(255,93,122,.15);color:var(--red)}
+  .empty{color:var(--muted);font-size:13px;text-align:center;padding:18px 0}
+  .banned{background:rgba(255,93,122,.12);border:1px solid var(--red);color:#ffd0d9;padding:12px;border-radius:14px;font-size:13px;margin-bottom:14px;display:none}
 </style>
 </head>
 <body>
@@ -224,6 +265,7 @@
   <div class="pages">
     <!-- HOME -->
     <section class="page active" id="p-home">
+      <div class="banned" id="bannedBox">Akunmu dibatasi karena terdeteksi melanggar aturan. Kamu tidak bisa mengumpulkan koin atau menarik saldo. Hubungi admin bila ini keliru.</div>
       <div class="hero">
         <div class="mascot-wrap">
           <div class="ring"></div><div class="ring r2"></div>
@@ -249,6 +291,10 @@
         <div style="height:12px"></div>
         <button class="btn gold" id="btnDaily">Klaim Hadiah</button>
       </div>
+      <div class="card" id="missionCard">
+        <div class="mhead"><h2 style="margin:0">Misi Harian</h2><small id="missionReset">Reset 00:00 WIB</small></div>
+        <div id="missionList"><div class="empty">Memuat misi...</div></div>
+      </div>
       <div class="card" id="walletCard">
         <div class="wallet-top">
           <div>
@@ -259,14 +305,17 @@
         </div>
         <div class="prog"><i id="wProg"></i></div>
         <div class="muted" id="wProgTxt">Kumpulkan koin untuk tarik saldo</div>
+        <div class="first-wd" id="firstWdBox">Bonus pemula: <b>tarik pertama cukup Rp2.000</b> (sekali per akun) untuk membuktikan pembayaran nyata.</div>
         <ul class="reqs" id="wReqs"></ul>
         <button class="btn gold" id="btnWd">Tarik Saldo</button>
+        <button class="linkbtn" id="btnHistory">Lihat riwayat koin & penarikan</button>
       </div>
       <div class="card">
         <h2>Bonus Koin</h2>
-        <p class="sub">Tonton iklan singkat, dapat +100 koin. Sisa hari ini: <b id="adsLeft">0</b></p>
-        <button class="btn" id="btnAdCoins">Tonton & Dapat 100 Koin</button>
+        <p class="sub">Tonton iklan singkat, dapat +<span class="adCoins">50</span> koin. Sisa hari ini: <b id="adsLeft">0</b></p>
+        <button class="btn" id="btnAdCoins">Tonton & Dapat <span class="adCoins">50</span> Koin</button>
       </div>
+      <button class="rules-link" id="btnRules">Cara Bermain, Aturan & Syarat</button>
     </section>
 
     <!-- QUIZ -->
@@ -366,7 +415,81 @@
   <input class="input" id="wdName" maxlength="40" placeholder="Sesuai nama di aplikasi DANA" />
   <button class="btn gold" id="btnWdSubmit">Ajukan Penarikan</button>
   <button class="btn ghost" id="btnWdClose" style="margin-top:8px">Batal</button>
-  <div class="fine">Penarikan diproses manual maks. 3x24 jam. Pastikan nomor dan nama benar; kesalahan data bukan tanggung jawab kami. Satu nomor DANA untuk satu akun. Akun yang terdeteksi curang (multi-akun/bot) akan dibatalkan penarikannya.</div>
+  <div class="fine">Penarikan diproses manual maks. 3x24 jam. Pastikan nomor dan nama benar; kesalahan data bukan tanggung jawab kami. Satu nomor DANA untuk satu akun. Akun yang terdeteksi curang (multi-akun/bot) akan dibatalkan penarikannya. <a href="#" id="lnkRulesWd" style="color:var(--cyan)">Baca aturan lengkap</a></div>
+</div>
+
+<div class="sheet-bg" id="histBg"></div>
+<div class="sheet" id="histSheet">
+  <div class="grab"></div>
+  <h2>Riwayat</h2>
+  <div class="tabs"><button class="on" data-t="tx">Koin</button><button data-t="wd">Penarikan</button></div>
+  <div id="histList"></div>
+  <button class="btn ghost" id="btnHistClose" style="margin-top:12px">Tutup</button>
+</div>
+
+<div class="sheet-bg" id="rulesBg"></div>
+<div class="sheet rules" id="rulesSheet">
+  <div class="grab"></div>
+  <h2>Cara Bermain, Aturan & Syarat</h2>
+
+  <h3>Cara dapat koin</h3>
+  <div class="rate">
+    <span>Klaim hadiah harian (naik tiap hari streak)</span><b>50 - 350</b>
+    <span>Jawaban kuis benar (5 soal/hari)</span><b>30</b>
+    <span>Cek khodam (1x sehari)</span><b>20</b>
+    <span>Tonton iklan (maks. 20x/hari)</span><b><span class="adCoins">50</span></b>
+    <span>Misi harian (semua misi)</span><b>s.d. 260</b>
+    <span>Undang teman (setelah temanmu nonton 10 iklan)</span><b>500</b>
+    <span>Bonus untuk teman yang diundang</span><b>200</b>
+  </div>
+
+  <h3>Streak & Nyawa</h3>
+  <ul>
+    <li><b>Streak</b> = jumlah hari berturut-turut klaim hadiah harian. Bolong 1 hari, streak kembali ke 1.</li>
+    <li><b>Nyawa</b> dipakai di kuis. Jawaban salah mengurangi 1 nyawa. Nyawa diisi ulang jadi 5 setiap hari (00:00 WIB), atau tambah lewat iklan.</li>
+    <li>Hadiah harian, kuis, dan batas iklan di-reset setiap pukul 00:00 WIB.</li>
+  </ul>
+
+  <h3>Tarik saldo (DANA)</h3>
+  <ul>
+    <li>Kurs: <b>100 koin = Rp10</b>. Kurs bisa berubah sewaktu-waktu dengan pemberitahuan di aplikasi.</li>
+    <li>Minimal penarikan <b>Rp10.000</b> (100.000 koin), kelipatan Rp10.000.</li>
+    <li><b>Bonus pemula:</b> penarikan pertama boleh <b>Rp2.000</b> (20.000 koin), hanya sekali per akun. Syarat umur akun dan jumlah iklan tetap berlaku.</li>
+    <li>Satu nomor DANA hanya boleh dipakai oleh satu akun.</li>
+    <li>Syarat: akun berumur minimal <b>3 hari</b>, sudah menonton minimal <b>50 iklan</b>, dan maksimal <b>1 penarikan per 24 jam</b>.</li>
+    <li>Koin langsung dipotong saat pengajuan. Penarikan diproses manual oleh admin maksimal <b>3x24 jam</b>.</li>
+    <li>Pastikan nomor DANA dan nama pemilik benar. Salah data bukan tanggung jawab kami.</li>
+  </ul>
+
+  <h3>Yang dilarang</h3>
+  <ul class="warn">
+    <li>Membuat atau memakai lebih dari 1 akun Telegram untuk bermain (multi-akun).</li>
+    <li>Memakai bot, auto-clicker, emulator, script, atau aplikasi pihak ketiga untuk menonton iklan / mengumpulkan koin.</li>
+    <li>Memakai VPN atau proxy untuk memalsukan lokasi.</li>
+    <li>Mengundang akun palsu atau akun sendiri lewat link undangan.</li>
+    <li>Memakai 1 nomor DANA untuk banyak akun.</li>
+    <li>Mengeksploitasi bug atau celah aplikasi. Laporkan bug ke admin, jangan dimanfaatkan.</li>
+    <li>Menjual, membeli, atau memindahkan koin dan akun.</li>
+  </ul>
+
+  <h3>Sanksi</h3>
+  <ul>
+    <li>Akun yang melanggar dapat <b>dibatasi atau diblokir</b> tanpa pemberitahuan.</li>
+    <li>Koin hasil kecurangan dihapus dan pengajuan penarikan <b>dibatalkan tanpa ganti rugi</b>.</li>
+    <li>Keputusan admin bersifat final.</li>
+  </ul>
+
+  <h3>Ketentuan lain</h3>
+  <ul>
+    <li>Koin adalah poin hadiah di dalam aplikasi, <b>bukan uang, tabungan, atau investasi</b>. Kami tidak pernah meminta setoran atau deposit dalam bentuk apa pun.</li>
+    <li>Fitur Cek Khodam <b>hanya hiburan</b> dan tidak memiliki makna spiritual atau ramalan sungguhan.</li>
+    <li>Ketersediaan iklan tergantung penyedia iklan dan bisa kosong sewaktu-waktu.</li>
+    <li>Aturan, kurs, dan hadiah dapat berubah sewaktu-waktu. Program dapat dihentikan dengan pemberitahuan di aplikasi.</li>
+  </ul>
+
+  <div class="note">Dengan terus bermain, kamu dianggap telah membaca dan menyetujui aturan ini.</div>
+  <label class="agree" id="agreeRow"><input type="checkbox" id="agreeChk" /> <span>Saya sudah membaca dan setuju dengan aturan & syarat di atas.</span></label>
+  <button class="btn" id="btnRulesOk">Mengerti</button>
 </div>
 
 <script>
@@ -558,9 +681,59 @@
     $('dailyText').textContent = u.daily_claimed ? 'Streak ' + u.streak + ' hari. Mantap!' : 'Hadiah naik tiap hari streak (maks 350)';
     $('refCount').textContent = u.referrals || 0;
     $('refLink').textContent = refLink();
+    if (u.ad_coins) Array.prototype.forEach.call(document.querySelectorAll('.adCoins'), function (el) { el.textContent = u.ad_coins; });
+    $('bannedBox').style.display = u.banned ? 'block' : 'none';
     renderWallet();
+    renderMissions();
+    if ($('histSheet').classList.contains('show')) renderHistory();
     renderQuiz();
   }
+
+  // ---------- Misi harian ----------
+  function renderMissions() {
+    var list = (state.user && state.user.missions) || [];
+    if (!list.length) { $('missionList').innerHTML = '<div class="empty">Misi belum tersedia.</div>'; return; }
+    var done = list.filter(function (m) { return m.claimed; }).length;
+    $('missionReset').textContent = done + '/' + list.length + ' selesai \u00b7 reset 00:00 WIB';
+    $('missionList').innerHTML = list.map(function (m) {
+      var pct = Math.min(100, Math.round(m.progress / m.target * 100));
+      var cls = m.claimed ? 'done' : (m.done ? 'go' : '');
+      var label = m.claimed ? 'Selesai' : (m.done ? 'Klaim +' + m.reward : '+' + m.reward);
+      return '<div class="mission' + (m.id === 'all' ? ' big' : '') + '"><div class="mi"><div class="mt">' + esc(m.title) + '</div><div class="mbar"><i style="width:' + pct + '%"></i></div><div class="mp">' + m.progress + '/' + m.target + '</div></div><button class="mbtn ' + cls + '" data-m="' + esc(m.id) + '"' + (m.done && !m.claimed ? '' : ' disabled') + '>' + label + '</button></div>';
+    }).join('');
+    Array.prototype.forEach.call($('missionList').querySelectorAll('.mbtn.go'), function (b) {
+      b.onclick = function () {
+        if (state.busy) return; state.busy = true; tap(); b.disabled = true; b.textContent = '...';
+        api('mission_claim', { id: b.getAttribute('data-m') }).then(function (d) {
+          toast(d.message);
+          if (d.ok) { haptic('success'); celebrate(b, d.result.reward); mood('menang', 'Misi beres! +' + d.result.reward + ' koin'); }
+        }).catch(function (e) { toast(e.message || 'Koneksi bermasalah'); renderMissions(); })
+          .then(function () { state.busy = false; });
+      };
+    });
+  }
+
+  // ---------- Riwayat ----------
+  var histTab = 'tx';
+  function fdate(t) { if (!t) return ''; var d = new Date(t); return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }) + ' ' + d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }); }
+  function renderHistory() {
+    var u = state.user || {}; var html = '';
+    if (histTab === 'tx') {
+      var tx = u.tx || [];
+      html = tx.length ? tx.map(function (t) { var plus = t.a >= 0; return '<div class="txrow"><div class="tn">' + esc(t.n) + '<small>' + fdate(t.t) + '</small></div><div class="ta ' + (plus ? 'plus' : 'minus') + '">' + (plus ? '+' : '') + Number(t.a).toLocaleString('id-ID') + '</div></div>'; }).join('') : '<div class="empty">Belum ada transaksi. Riwayat mulai tercatat dari sekarang.</div>';
+    } else {
+      var w = u.withdrawals || [];
+      html = w.length ? w.map(function (x) { return '<div class="txrow"><div class="tn">Tarik ke DANA ' + rp(x.amount_idr) + '<small>' + fdate(x.at) + (x.note ? ' \u00b7 ' + esc(x.note) : '') + '</small></div><span class="badge ' + esc(x.status) + '">' + esc(x.status) + '</span></div>'; }).join('') : '<div class="empty">Belum ada penarikan.</div>';
+    }
+    $('histList').innerHTML = html;
+  }
+  function openHist(open) { $('histBg').classList.toggle('show', open); $('histSheet').classList.toggle('show', open); if (open) renderHistory(); }
+  $('btnHistory').onclick = function () { tap(); openHist(true); };
+  $('btnHistClose').onclick = function () { openHist(false); };
+  $('histBg').onclick = function () { openHist(false); };
+  Array.prototype.forEach.call(document.querySelectorAll('#histSheet .tabs button'), function (b) {
+    b.onclick = function () { tap(); histTab = b.getAttribute('data-t'); document.querySelectorAll('#histSheet .tabs button').forEach(function (x) { x.classList.toggle('on', x === b); }); renderHistory(); };
+  });
 
   // ---------- Dompet / Tarik Saldo ----------
   function rp(n) { return 'Rp' + Number(n || 0).toLocaleString('id-ID'); }
@@ -568,12 +741,14 @@
   function renderWallet() {
     var u = state.user; var w = u && u.wallet; if (!w) return;
     $('wBal').textContent = rp(w.balance_idr); $('sBal').textContent = rp(w.balance_idr);
-    var pct = Math.min(100, Math.round(w.balance_idr / w.min_idr * 100));
+    var minNow = w.first_available ? w.first_idr : w.min_idr;
+    $('firstWdBox').style.display = w.first_available ? 'block' : 'none';
+    var pct = Math.min(100, Math.round(w.balance_idr / minNow * 100));
     $('wProg').style.width = pct + '%';
-    $('wProgTxt').textContent = w.balance_idr >= w.min_idr ? 'Saldo cukup untuk ditarik!' : rp(w.min_idr - w.balance_idr) + ' lagi menuju minimal tarik ' + rp(w.min_idr);
+    $('wProgTxt').textContent = w.balance_idr >= minNow ? 'Saldo cukup untuk ditarik!' : rp(minNow - w.balance_idr) + ' lagi menuju minimal tarik ' + rp(minNow);
     var gapOk = !w.next_wd_at || Date.now() >= w.next_wd_at;
     var reqs = [
-      [w.balance_idr >= w.min_idr, 'Saldo minimal ' + rp(w.min_idr)],
+      [w.balance_idr >= minNow, 'Saldo minimal ' + rp(minNow) + (w.first_available ? ' (tarik pertama)' : '')],
       [w.age_days >= w.min_age_days, 'Akun berumur ' + w.min_age_days + ' hari (' + Math.min(w.age_days, w.min_age_days) + '/' + w.min_age_days + ')'],
       [u.ads_total >= w.min_ads, 'Tonton ' + w.min_ads + ' iklan (' + Math.min(u.ads_total, w.min_ads) + '/' + w.min_ads + ')'],
       [gapOk, 'Maks. 1 penarikan per 24 jam']
@@ -585,7 +760,7 @@
     $('btnWd').textContent = ready ? 'Tarik Saldo' : 'Penuhi syarat untuk tarik';
     if (w.dana_number && !$('wdNum').value) $('wdNum').value = w.dana_number;
     if (w.dana_name && !$('wdName').value) $('wdName').value = w.dana_name;
-    var opts = [w.min_idr, w.min_idr * 2, w.min_idr * 5]; var html = '';
+    var opts = w.first_available ? [w.first_idr, w.min_idr, w.min_idr * 2] : [w.min_idr, w.min_idr * 2, w.min_idr * 5]; var html = '';
     if (wdAmount > w.balance_idr) wdAmount = 0;
     opts.forEach(function (a) { html += '<button data-a="' + a + '"' + (a > w.balance_idr ? ' disabled' : '') + (a === wdAmount ? ' class="on"' : '') + '>' + rp(a) + '</button>'; });
     $('wdAmounts').innerHTML = html;
@@ -594,7 +769,31 @@
     });
   }
   function openSheet(open) { $('sheetBg').classList.toggle('show', open); $('wdSheet').classList.toggle('show', open); }
-  $('btnWd').onclick = function () { tap(); if (!wdAmount && state.user) wdAmount = state.user.wallet.min_idr; renderWallet(); openSheet(true); };
+  // ---------- Aturan & Syarat ----------
+  var RULES_KEY = 'khodi_rules_v1';
+  function rulesAccepted() { try { return localStorage.getItem(RULES_KEY) === '1'; } catch (e) { return false; } }
+  var rulesThen = null;
+  function openRules(open, then) {
+    rulesThen = open ? (then || null) : rulesThen;
+    $('rulesBg').classList.toggle('show', open); $('rulesSheet').classList.toggle('show', open);
+    var acc = rulesAccepted(); $('agreeRow').style.display = acc ? 'none' : 'flex';
+    $('btnRulesOk').disabled = !acc && !$('agreeChk').checked;
+    if (open) $('rulesSheet').scrollTop = 0;
+  }
+  $('agreeChk').onchange = function () { $('btnRulesOk').disabled = !this.checked; };
+  $('btnRulesOk').onclick = function () {
+    try { localStorage.setItem(RULES_KEY, '1'); } catch (e) {}
+    tap(); openRules(false); var f = rulesThen; rulesThen = null; if (f) f();
+  };
+  $('rulesBg').onclick = function () { if (rulesAccepted()) openRules(false); };
+  $('btnRules').onclick = function () { tap(); openRules(true); };
+  $('lnkRulesWd').onclick = function (e) { e.preventDefault(); openSheet(false); openRules(true); };
+  $('btnWd').onclick = function () {
+    tap();
+    var go = function () { var w = state.user && state.user.wallet; if (!wdAmount && w) wdAmount = w.first_available ? w.first_idr : w.min_idr; renderWallet(); openSheet(true); };
+    if (!rulesAccepted()) { openRules(true, go); return; }
+    go();
+  };
   $('btnWdClose').onclick = function () { openSheet(false); };
   $('sheetBg').onclick = function () { openSheet(false); };
   $('btnWdSubmit').onclick = function () {
@@ -682,7 +881,7 @@
     show({ type: 'end', ymid: state.user.id + '-' + purpose + '-' + Date.now(), requestVar: purpose }).then(function () {
       return api('ad_reward', { purpose: purpose }).then(function (d) {
         toast(d.message);
-        if (d.ok) { haptic('success'); if (purpose === 'coins') celebrate(btn, (d.result && d.result.ref_bonus) ? 300 : 100); else confetti(btn); mood('senang', (d.result && d.result.ref_bonus) ? 'Bonus undangan cair! +200 koin' : (purpose === 'life' ? 'Nyawa bertambah!' : 'Koin bertambah!')); }
+        if (d.ok) { haptic('success'); if (purpose === 'coins') celebrate(btn, (d.result && d.result.coins || 0) + (d.result && d.result.ref_bonus || 0)); else confetti(btn); mood('senang', (d.result && d.result.ref_bonus) ? 'Bonus undangan cair! +200 koin' : (purpose === 'life' ? 'Nyawa bertambah!' : 'Koin bertambah!')); }
       });
     }).catch(function () { toast('Iklan dilewati atau gagal dimuat.'); })
       .then(function () { state.busy = false; state.lastInterstitial = Date.now(); btn.textContent = label; btn.disabled = false; renderQuiz(); if (state.user) $('btnAdCoins').disabled = state.user.ads_left <= 0; });
@@ -788,6 +987,7 @@
     else if (!d.user.daily_claimed) mood('senang', 'Halo lagi, ' + n + '! Hadiah harianmu sudah menunggu.');
     else say('Halo, ' + n + '! Tap aku kalau bosan ya.');
     if (d.message) toast(d.message);
+    if (!rulesAccepted()) setTimeout(function () { openRules(true); }, 1200);
   }).catch(function (e) { $('loaderText').textContent = e.message || 'Gagal terhubung. Coba buka ulang.'; });
 })();
 </script>
